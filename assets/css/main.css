@@ -30,12 +30,17 @@
   background-color: var(--hover-color);
   opacity: 0.8;
 }
-.menu_user {
+.menu-user .navbar__menu__user{
+  display: inline-block;
+}
+.menu-user .navbar__menu__non-user{
+  display: none;
 }
 
 .navbar__menu__user {
+display: none;
 }
-#user_name {
+#user-name {
   padding-right: 34px;
 }
 
@@ -69,7 +74,6 @@
 
 .user-setting__item{
   line-height: 1.4rem;
-  padding: 10px 0;
   border-bottom: 1px solid #76cafa;
   border-radius: 5px;
 }
@@ -79,6 +83,8 @@
   color: var(--white-color);
   font-size: 1.4rem;
   font-weight:400;
+  display: block;
+  line-height: 35px;
 }
 .user-setting__item:hover{
 background-color:var(--hover-color);
@@ -244,7 +250,6 @@ background-color:var(--hover-color);
   width: 200px;
 }
 .header-middle-search {
-  /* flex: 0.5; */
   width: 486px;
   margin-right: -59px;
 }
@@ -285,7 +290,8 @@ background-color:var(--hover-color);
   display: none;
 }
 
-.search-example-content {
+.search-example-content > a {
+  text-decoration: none;
 }
 
 .search-example-content__title {
@@ -311,25 +317,56 @@ background-color:var(--hover-color);
 }
 
 /* Container */
-.container {
-  display: flex;
-  justify-content: space-around;
+
+.category{
+  margin-top:20px;
+  background-color:var(--white-color);
+  border-radius:5px;
+  box-shadow: 0 4px 32px rgb(36 142 255 / 18%);
+  
 }
-.container_left {
-  width: 300px;
+.fa-list-ul{
+  margin-right: 4px;
+  font-size: 1.5rem;
+  position: relative;
+  top: -0.3px;
 }
-.container_main {
-  flex: 1;
-  background-color: #009bf5;
+.category__heading{
+  font-size: 1.7rem;
+    margin: 0;
+    padding: 15px 16px 0px;
+    font-weight: 600;
+    cursor:default;
 }
-.container_right {
-  width: 300px;
+.category-list{
+  list-style: none;
+  padding:0;
+}
+.category-item:hover{
+  background-color: rgba(0,0,0,0.05);
+}
+
+.category-item__link{
+  text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1.4rem;
+    display: block;
+    line-height: 3.6rem;
+    padding: 0 0 0 41px;
+}
+
+.abc{
+  background-color:var(--white-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 32px rgb(36 142 255 / 18%);
+  margin-top: 20px;
 }
 
 /* Footer */
 
 .footer-main {
-  padding: 40px 0;
+  padding: 40px 0 20px;
   background-color: #1c1c1c;
   color: var(--white-color);
 }

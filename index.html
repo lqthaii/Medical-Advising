@@ -55,8 +55,8 @@
 
                         </li>
                     </ul>
-
-                    <ul class="navbar__menu menu_user">
+                    <!-- menu-user -->
+                    <ul class="navbar__menu menu-user">
                         <li class="navbar__menu__item navbar__menu__item--notify">
                             <a href="#"> <i class="fas fa-bell"></i> Thông báo</a>
                             <span class="notify-number">5</span>
@@ -129,7 +129,8 @@
                             </div>
                         </li>
                         <li class="navbar__menu__item navbar__menu__user">
-                            <a href="#" id="user_name">Quốc
+                            <a href="#">
+                                <span id="user-name">Quốc</span>
                                 <img src="https://scontent.xx.fbcdn.net/v/t1.6435-1/p100x100/61276143_2393882167529766_872907495381663744_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=dbb9e7&_nc_ohc=SdMdARam4goAX-H7g8r&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=793bc26f5be629ed222673017287226b&oe=615C9AC7"
                                     alt="avatar" class="navbar__menu__user__avt">
                             </a>
@@ -138,12 +139,12 @@
                                     <li class="user-setting__item"><a href="#">Thông tin</a></li>
                                     <li class="user-setting__item"><a href="#">Hồ sơ bệnh án</a></li>
                                     <li class="user-setting__item"><a href="#">Lịch sử đơn hàng</a></li>
-                                    <li class="user-setting__item"><a href="#">Đăng xuất</a></li>
+                                    <li class="user-setting__item"><a href="#" id="log-out">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <!-- <li class="navbar__menu__item"><a href="login.html">Đăng Nhập</a></li>
-                        <li class="navbar__menu__item"><a href="signup.html">Đăng Kí</a></li> -->
+                        <li class="navbar__menu__item navbar__menu__non-user "id="user-info"><a href="#">Đăng Nhập</a></li>
+                        <li class="navbar__menu__item navbar__menu__non-user"><a href="signup.html">Đăng Kí</a></li>
                     </ul>
                 </nav>
 
@@ -164,11 +165,15 @@
                             <div class="search-example-content__title">
                                 Tìm kiếm phổ biến
                             </div>
-                            <div class="search-example-content__item">Thuốc trị cảm cúm</div>
-                            <div class="search-example-content__item">Thuốc ho</div>
-                            <div class="search-example-content__item">Đau bụng</div>
-                            <div class="search-example-content__item">Khó thở</div>
-                            <div class="search-example-content__item">Thuốc kháng sinh</div>
+                            <a href="#"><div class="search-example-content__item">Thuốc trị cảm cúm</div></a>
+                            <a href="#"><div class="search-example-content__item">Thuốc ho</div></a>
+                            <a href="#"><div class="search-example-content__item">Đau bụng</div></a>
+                            <a href="#"><div class="search-example-content__item">Khó thở</div></a>
+                            <a href="#"><div class="search-example-content__item">Thuốc kháng sinh</div></a>
+                            
+                            
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -190,110 +195,126 @@
 
     <!-- Container Begin -->
     <div class="container">
-        <div class="container_left">
-            <h2>Tin Tức</h2>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-        </div>
-
-        <div class="container_main">
-            <h2>Chính</h2>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-        </div>
-
-        <div class="container_right">
-            <h2>Danh mục</h2>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
-            alo <br>
+        <div class="grid">
+            <div class="grid__row">
+                <div class="grid__column-2">
+                    <nav class="category">
+                        <h3 class="category__heading">
+                            <i class="fas fa-list-ul"></i>
+                            Danh mục
+                        </h3>
+                        <ul class="category-list">
+                            <li class="category-item category-item--active">
+                                <a href="#" class="category-item__link">Tất cả</a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-item__link">Covid-19</a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-item__link">Thuốc</a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-item__link">Dụng cụ y tế</a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-item__link">Sản phẩm khác</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+    
+                <div class="grid__column-10">
+                    <div class="abc">
+                        alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    alo <br>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Container End -->
