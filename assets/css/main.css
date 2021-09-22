@@ -10,6 +10,11 @@
   list-style: none;
   padding-left: 0;
 }
+#selected {
+  border-radius: 50px;
+  background-color: var(--hover-color);
+  opacity: 0.8;
+}
 .navbar__menu__item {
   display: inline-block;
   font-size: 1.5rem;
@@ -30,18 +35,18 @@
   background-color: var(--hover-color);
   opacity: 0.8;
 }
-.menu-user .navbar__menu__user{
+.menu-user .navbar__menu__user {
   display: inline-block;
 }
-.menu-user .navbar__menu__non-user{
+.menu-user .navbar__menu__non-user {
   display: none;
 }
 
 .navbar__menu__user {
-display: none;
+  display: none;
 }
 #user-name {
-  padding-right: 34px;
+  padding-right: 30px;
 }
 
 .navbar__menu__user__avt {
@@ -63,16 +68,16 @@ display: none;
   background-color: var(--main-color);
   z-index: 999;
   border-radius: 5px;
-  display:none;
+  display: none;
 }
 
 .user-setting__list {
   list-style: none;
   width: 100%;
-  padding:10px;
+  padding: 10px;
 }
 
-.user-setting__item{
+.user-setting__item {
   line-height: 1.4rem;
   border-bottom: 1px solid #76cafa;
   border-radius: 5px;
@@ -82,14 +87,13 @@ display: none;
   text-decoration: none;
   color: var(--white-color);
   font-size: 1.4rem;
-  font-weight:400;
+  font-weight: 400;
   display: block;
   line-height: 35px;
 }
-.user-setting__item:hover{
-background-color:var(--hover-color);
+.user-setting__item:hover {
+  background-color: var(--hover-color);
 }
-
 
 /* CSS Đối Tác */
 .navbar__menu__item-coop {
@@ -100,16 +104,16 @@ background-color:var(--hover-color);
   top: 140%;
   border-radius: 5px;
   display: none;
-  z-index: 1;
+  z-index: 2;
 }
 .navbar__menu__item-coop::before {
   position: absolute;
-    width: 100%;
-    height: 30px;
-    top: -17px;
-    left: 0;
-    content: "";
-    display: block;
+  width: 100%;
+  height: 30px;
+  top: -17px;
+  left: 0;
+  content: "";
+  display: block;
 }
 .coop-list {
   list-style: none;
@@ -126,10 +130,10 @@ background-color:var(--hover-color);
   text-decoration: none;
   color: var(--white-color);
   font-size: 1.4rem;
-  font-weight:400;
+  font-weight: 400;
 }
 .coop-list-item:hover {
-  background-color:var(--hover-color);
+  background-color: var(--hover-color);
 }
 .navbar__menu__item--coop:hover .navbar__menu__item-coop {
   display: block;
@@ -147,7 +151,7 @@ background-color:var(--hover-color);
   overflow: auto;
   display: none;
   cursor: default;
-  z-index: 1;
+  z-index: 2;
 }
 .notify-number {
   color: var(--main-color);
@@ -231,7 +235,7 @@ background-color:var(--hover-color);
   width: 100%;
   height: 84px;
   position: sticky;
-  z-index: 0;
+  z-index: 1;
   display: flex;
   position: -webkit-sticky;
   background-color: var(--white-color);
@@ -261,7 +265,6 @@ background-color:var(--hover-color);
   border-radius: 36px;
   color: var(--white-color);
 }
-
 .header-middle-search__input {
   height: 47px;
   outline: none;
@@ -271,7 +274,7 @@ background-color:var(--hover-color);
   font-weight: 500;
   border-radius: 30px;
   border: 0.8px solid #4796ff;
-  padding-left: 20px;
+  padding:0 61px 0 20px;
 }
 .header-middle-search:focus-within .search-example {
   display: block;
@@ -313,57 +316,124 @@ background-color:var(--hover-color);
 }
 
 .search-example-content__item:hover {
-  background-color: #fafbfc;
+  background-color: var(--background-color);
 }
-
-/* Container */
-
-.category{
-  margin-top:20px;
-  background-color:var(--white-color);
-  border-radius:5px;
-  box-shadow: 0 4px 32px rgb(36 142 255 / 18%);
-  
+/* Container CSS */
+.title_news {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-left: 22.2%;
 }
-.fa-list-ul{
-  margin-right: 4px;
-  font-size: 1.5rem;
+.slider {
+  max-width: 55%;
+  margin: 25px auto;
   position: relative;
-  top: -0.3px;
 }
-.category__heading{
-  font-size: 1.7rem;
-    margin: 0;
-    padding: 15px 16px 0px;
-    font-weight: 600;
-    cursor:default;
-}
-.category-list{
+.slider-dots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   list-style: none;
-  padding:0;
+  z-index: 1;
 }
-.category-item:hover{
-  background-color: rgba(0,0,0,0.05);
+.slider-dots li {
+  margin: 0 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 100rem;
+  background-color: #999;
+  cursor: pointer;
+  transition: background-color 0.25s linear;
+}
+.slider-dots li.active {
+  background-color: white;
+}
+.slider-wrapper {
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  z-index: 0;
+}
+.slider-main {
+  display: flex;
+  position: relative;
+  transition: transform 0.25s linear;
+  height: 100%;
+  z-index: -1;
+}
+.slider-item {
+  height: 100%;
+  width: 100%;
+  flex: 1 0 100%;
+  user-select: none;
+}
+.slider-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 10px;
 }
 
-.category-item__link{
+/* CSS blog news */
+.news__container {
+  width: 57%;
+  margin: 0 auto 10px;
+}
+.news__blog {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 42px 56px rgb(36 142 255 / 8%);
+  margin-bottom: 14px;
+  border-radius: 10px;
+  background-color: var(--white-color);
+}
+.news__blog__img {
+  max-width: 300px;
+  min-width: 250px;
+  flex: 1;
+  box-sizing: content-box;
+  padding-left: 5px;
+  margin-top: 5px;
+}
+.news__blog__img img {
+  width: 100%;
+  border-radius: 8px;
+  max-height: 130px;
+  object-fit: cover;
+}
+.news__blog__info {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 10px 10px;
+  align-self: flex-start;
+}
+.news__blog__info__header {
+  font-size: 1.7rem;
+  margin: 7px 0;
+}
+.news__blog__info__content {
+  flex-wrap: wrap;
+  display: flex;
+}
+.news__blog__info__content span {
+  overflow: hidden;
+  height: 73px;
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+}
+.news__blog__link {
   text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 1.4rem;
-    display: block;
-    line-height: 3.6rem;
-    padding: 0 0 0 41px;
+  color: var(--main-color);
+  font-size: 1.3rem;
 }
 
-.abc{
-  background-color:var(--white-color);
-  border-radius: 5px;
-  box-shadow: 0 4px 32px rgb(36 142 255 / 18%);
-  margin-top: 20px;
-}
-
-/* Footer */
+/* Footer CSS*/
 
 .footer-main {
   padding: 40px 0 20px;
@@ -416,6 +486,8 @@ background-color:var(--hover-color);
 
 .social > a:hover {
   opacity: 0.9;
+  font-size: 25px;
+  transition:font-size 0.1s ease;
 }
 
 .copyright {
@@ -425,3 +497,4 @@ background-color:var(--hover-color);
   color: #aaa;
   margin-bottom: 0;
 }
+
