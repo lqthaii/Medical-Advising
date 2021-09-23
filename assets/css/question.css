@@ -1,19 +1,18 @@
 .question {
-  display: flex;
-  justify-content: space-around;
   margin: 20px 0;
   padding: 0 24px;
 }
 .question__form {
-  width: 60%;
-  height: 360px;
+  width: 80%;
+  height: 350px;
   background-color: var(--white-color);
   border-radius: 10px;
-  /* margin-right: 32px; */
+  margin-left: 41px;
 }
 .question__form__container {
   padding: 24px;
   height: 100%;
+  box-shadow: 0 4px 32px rgb(36 142 255 / 8%);
 }
 .question__form__container h3 {
   margin: 0;
@@ -97,10 +96,12 @@
 .question__filter {
   position: sticky;
   top: 0;
-  height: 637px;
+  margin-top: 20px;
+  height: 337px;
   background-color: var(--white-color);
   padding-top: 24px;
   border-radius: 10px;
+  box-shadow: 0 4px 32px rgb(36 142 255 / 8%);
 }
 .question__input {
   border: 1px solid;
@@ -121,10 +122,10 @@
 }
 
 .question-popular__wrapper {
-  background-color: var(--white-color)
+  background-color: var(--white-color);
 }
 .question-popular__heading {
-font-size: 1.4rem;
+  font-size: 1.4rem;
 }
 .question-popular__container {
   display: flex;
@@ -137,8 +138,60 @@ font-size: 1.4rem;
   border-radius: 20px;
   cursor: pointer;
 }
-.question-popular__content:hover{
+.question-popular__content:hover {
   background-color: var(--main-color);
   color: var(--white-color);
   border: 1px solid var(--hover-color);
+}
+
+/* Question view */
+.question__container {
+  width: 80%;
+  margin-left: 64px;
+}
+.question__view {
+  margin-top: 20px;
+  border-radius: 10px;
+  width: 98%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.question__answer__container {
+  width: 47%;
+  padding: 8px;
+  background-color: var(--white-color);
+  border-radius: 10px;
+  margin: 0px 20px 20px 0;
+  box-shadow: 0 4px 32px rgb(36 142 255 / 8%);
+}
+.question__answer__img {
+  width: 100%;
+  border-radius: 10px;
+}
+.question__answer__heading {
+  font-size: 1.2rem;
+}
+.answer__container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.doctor__img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  margin: 0 10px;
+}
+.answer__hint {
+  font-size: 0.9rem;
+  color: #999;
+}
+.doctor__name {
+  font-size: 1rem;
+  color: #000;
+  font-weight: 600;
+}
+.doctor__exp {
+  font-size: 0.7rem;
+  color: var(--text-color);
 }
