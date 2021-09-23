@@ -149,6 +149,9 @@
   width: 80%;
   margin-left: 64px;
 }
+.question__answer__container a{
+  text-decoration: none;
+}
 .question__view {
   margin-top: 20px;
   border-radius: 10px;
@@ -170,6 +173,7 @@
 }
 .question__answer__heading {
   font-size: 1.2rem;
+  color: var(--text-color);
 }
 .answer__container {
   width: 100%;
