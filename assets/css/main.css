@@ -52,9 +52,11 @@
 .navbar__menu__user__avt {
   position: absolute;
   width: 2.8rem;
+  height: 2.8rem;
   top: 2px;
   right: 2px;
   border-radius: 50px;
+  object-fit: cover;
 }
 
 .navbar__menu__user:hover .user-setting {
@@ -274,7 +276,7 @@
   font-weight: 500;
   border-radius: 30px;
   border: 0.8px solid #4796ff;
-  padding:0 61px 0 20px;
+  padding: 0 61px 0 20px;
 }
 .header-middle-search:focus-within .search-example {
   display: block;
@@ -487,7 +489,7 @@
 .social > a:hover {
   opacity: 0.9;
   font-size: 25px;
-  transition:font-size 0.1s ease;
+  transition: font-size 0.1s ease;
 }
 
 .copyright {
@@ -497,4 +499,3 @@
   color: #aaa;
   margin-bottom: 0;
 }
-

@@ -34,21 +34,21 @@ userInfo.addEventListener("click", function (e) {
 // Slider JS
 window.addEventListener("load", function () {
   const sliderMain = document.querySelector(".slider-main");
-  const sliderItems = document.querySelectorAll(".slider-item");
+  // const sliderItems = document.querySelectorAll(".slider-item");
   const sliderDots = document.querySelectorAll(".slider-dot-item");
-  let interval = 0;
-  let indexDot = 0;
-  let slideEnd = false;
-  function indexActive(index) {
-    let dotActive;
-    sliderDots.forEach(function (items) {
-      if (items.classList.contains("active")) {
-        dotActive = items.getAttribute("data-index");
-      }
-      items.classList.remove("active");
-    });
-    sliderDots[index].classList.add("active");
-  }
+  // let interval = 0;
+  // let indexDot = 0;
+  // let slideEnd = false;
+  // function indexActive(index) {
+  //   let dotActive;
+  //   sliderDots.forEach(function (items) {
+  //     if (items.classList.contains("active")) {
+  //       dotActive = items.getAttribute("data-index");
+  //     }
+  //     items.classList.remove("active");
+  //   });
+  //   sliderDots[index].classList.add("active");
+  // }
   function removeActive() {
     sliderDots.forEach(function (items) {
       items.classList.remove("active");

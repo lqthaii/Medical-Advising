@@ -120,6 +120,9 @@
   cursor: pointer;
   padding: 5px 7px;
 }
+.question-search__btn:hover {
+  background-color: var(--hover-color);
+}
 
 .question-popular__wrapper {
   background-color: var(--white-color);
@@ -149,7 +152,7 @@
   width: 80%;
   margin-left: 64px;
 }
-.question__answer__container a{
+.question__answer__container a {
   text-decoration: none;
 }
 .question__view {
