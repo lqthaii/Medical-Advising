@@ -26,9 +26,8 @@ userInfo.addEventListener("click", function (e) {
   console.log(userName);
   console.log(userAvt);
   navbarUser.classList.add("menu-user");
-  userName.innerText = "Khoa";
-  userAvt.src =
-    "https://scontent.xx.fbcdn.net/v/t1.6435-1/p100x100/52161636_1064694103715214_75803037448273920_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=dbb9e7&_nc_ohc=OwLo2wdhXuoAX8ncaMf&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=b5057126446a9061dd2660dd74cd1ef9&oe=615D4554";
+  userName.innerText = "Quốc";
+  userAvt.src = "../assets/image/maxresdefault.jpg";
 });
 
 // Slider JS

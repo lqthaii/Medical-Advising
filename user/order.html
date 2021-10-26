@@ -12,11 +12,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
     integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="assets/font/fontawesome/css/all.css">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/order.css">
-  <link rel="icon" href="assets/image/881599_medical_512x512.png" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/font/fontawesome/css/all.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/order.css">
+  <link rel="icon" href="../assets/image/881599_medical_512x512.png" type="image/x-icon">
   <title>Medical Advice</title>
 </head>
 <!--Start of Tawk.to Script-->
@@ -133,9 +133,7 @@
             <li class="navbar__menu__item navbar__menu__user">
               <a href="#">
                 <span id="user-name">Quốc</span>
-                <img
-                  src="https://scontent.xx.fbcdn.net/v/t1.6435-1/p100x100/61276143_2393882167529766_872907495381663744_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=dbb9e7&_nc_ohc=SdMdARam4goAX-H7g8r&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=793bc26f5be629ed222673017287226b&oe=615C9AC7"
-                  alt="avatar" class="navbar__menu__user__avt">
+                <img src="../assets/image/maxresdefault.jpg" alt="avatar" class="navbar__menu__user__avt">
               </a>
               <div class="user-setting">
                 <ul class="user-setting__list">
@@ -156,51 +154,51 @@
 
     <div class="header-middle">
       <div class="header-middle-content">
-        <a href="index.html" class="logo-link">
-          <img src="https://nhathuoc.edoctor.io/assets/header/edoctor_logo_icon.svg" alt="" class="header-middle__logo">
-        </a>
+          <a href="index.html" class="logo-link">
+              <img src="../assets/image/logo_transparent.png" alt="" class="header-middle__logo">
+          </a>
 
-        <div class="header-middle-search">
-          <input type="text" class="header-middle-search__input" placeholder="Nhập tìm kiếm...">
-          <div class="search-example">
-            <div class="search-example-content">
-              <div class="search-example-content__title">
-                Tìm kiếm phổ biến
+          <div class="header-middle-search">
+              <input type="text" class="header-middle-search__input" placeholder="Nhập tìm kiếm...">
+              <div class="search-example">
+                  <div class="search-example-content">
+                      <div class="search-example-content__title">
+                          Tìm kiếm phổ biến
+                      </div>
+                      <a href="#">
+                          <div class="search-example-content__item">Thuốc trị cảm cúm</div>
+                      </a>
+                      <a href="#">
+                          <div class="search-example-content__item">Thuốc ho</div>
+                      </a>
+                      <a href="#">
+                          <div class="search-example-content__item">Đau bụng</div>
+                      </a>
+                      <a href="#">
+                          <div class="search-example-content__item">Khó thở</div>
+                      </a>
+                      <a href="#">
+                          <div class="search-example-content__item">Thuốc kháng sinh</div>
+                      </a>
+
+
+
+
+                  </div>
               </div>
-              <a href="#">
-                <div class="search-example-content__item">Thuốc trị cảm cúm</div>
-              </a>
-              <a href="#">
-                <div class="search-example-content__item">Thuốc ho</div>
-              </a>
-              <a href="#">
-                <div class="search-example-content__item">Đau bụng</div>
-              </a>
-              <a href="#">
-                <div class="search-example-content__item">Khó thở</div>
-              </a>
-              <a href="#">
-                <div class="search-example-content__item">Thuốc kháng sinh</div>
-              </a>
-
-
-
-
-            </div>
           </div>
-        </div>
-        <a href="#" class="search-icon-link">
-          <div class="search-icon">
-            <i class="fas fa-search"></i>
-          </div>
-        </a>
-        <a href="index.html" class="logo-link">
-          <img src="https://nhathuoc.edoctor.io/assets/header/logo_phano.svg" alt="" class="header-middle__logo">
-        </a>
+          <a href="#" class="search-icon-link">
+              <div class="search-icon">
+                  <i class="fas fa-search"></i>
+              </div>
+          </a>
+          <a href="index.html" class="logo-link ">
+              <img src="../assets/image/logo2_transparent.png" alt="" class="header-middle__logo logo-link__advice">
+          </a>
 
       </div>
 
-    </div>
+  </div>
   </div>
   <!-- Header End -->
 
@@ -397,6 +395,31 @@
     </div>
     <div class="shopping__cart">
       <i class="fas fa-cart-plus"></i>
+      <span class="shopping__cart__number display--none">0</span>
+    </div>
+    <div class="shopping__cart__list">
+      <h4 class="shopping__cart__header">Sản phẩm đã thêm</h4>
+      <ul class="cart__list__container">
+        <!-- <li class="cart__list__item">
+            <img src="https://upload.api.edoctor.io/v1/attachment/image/5f7cc2741880ec001260c2ab/original" alt="sản phẩm đã thêm" class="item__img">
+            <div class="item__info">
+              <div class="item__header">
+                <h5 class="item__name">Kiêm tiêm dùng cho bút tiêm</h5>
+                <span class="item__price">2000000đ</span>
+                <span class="item__qnt">x2</span>
+              </div>
+              <div class="item__body">
+                <span class="items__price__total">Tổng: 3000000</span>
+                <span class="item__cart__edit"><i class="fas fa-pencil-alt"></i></span> -->
+        <!-- <span class="item__cart__edit"><i class="far fa-trash-alt"></i></span> -->
+        <!-- <span class="item__cart__edit"><i class="fas fa-trash-alt"></i></span>
+              </div>
+            </div>
+          </li> -->
+      </ul>
+      <div class="btn__buy__cart">
+        <button class="buy__confirm">Mua</button>
+      </div>
     </div>
   </div>
   <!-- Container End -->
@@ -446,7 +469,7 @@
     </div>
   </div>
 </body>
-<script src="js/main.js"></script>
-<script src="js/order.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/order.js"></script>
 
 </html>
