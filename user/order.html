@@ -19,6 +19,11 @@
   <link rel="icon" href="../assets/image/881599_medical_512x512.png" type="image/x-icon">
   <title>Medical Advice</title>
 </head>
+<!-- Google map API -->
+<!-- <script defer
+src="https://maps.googleapis.com/maps/api/js?libraries=places&language=vi&key=AIzaSyASFAoOdtLHSx-Twjx_jUwDa108QnnSWfg&callback=initMap&v=weekly&channel=2"
+type="text/javascript"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
   var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
@@ -154,51 +159,51 @@
 
     <div class="header-middle">
       <div class="header-middle-content">
-          <a href="index.html" class="logo-link">
-              <img src="../assets/image/logo_transparent.png" alt="" class="header-middle__logo">
-          </a>
+        <a href="index.html" class="logo-link">
+          <img src="../assets/image/logo_transparent.png" alt="" class="header-middle__logo">
+        </a>
 
-          <div class="header-middle-search">
-              <input type="text" class="header-middle-search__input" placeholder="Nhập tìm kiếm...">
-              <div class="search-example">
-                  <div class="search-example-content">
-                      <div class="search-example-content__title">
-                          Tìm kiếm phổ biến
-                      </div>
-                      <a href="#">
-                          <div class="search-example-content__item">Thuốc trị cảm cúm</div>
-                      </a>
-                      <a href="#">
-                          <div class="search-example-content__item">Thuốc ho</div>
-                      </a>
-                      <a href="#">
-                          <div class="search-example-content__item">Đau bụng</div>
-                      </a>
-                      <a href="#">
-                          <div class="search-example-content__item">Khó thở</div>
-                      </a>
-                      <a href="#">
-                          <div class="search-example-content__item">Thuốc kháng sinh</div>
-                      </a>
-
-
-
-
-                  </div>
+        <div class="header-middle-search">
+          <input type="text" class="header-middle-search__input" placeholder="Nhập tìm kiếm...">
+          <div class="search-example">
+            <div class="search-example-content">
+              <div class="search-example-content__title">
+                Tìm kiếm phổ biến
               </div>
+              <a href="#">
+                <div class="search-example-content__item">Thuốc trị cảm cúm</div>
+              </a>
+              <a href="#">
+                <div class="search-example-content__item">Thuốc ho</div>
+              </a>
+              <a href="#">
+                <div class="search-example-content__item">Đau bụng</div>
+              </a>
+              <a href="#">
+                <div class="search-example-content__item">Khó thở</div>
+              </a>
+              <a href="#">
+                <div class="search-example-content__item">Thuốc kháng sinh</div>
+              </a>
+
+
+
+
+            </div>
           </div>
-          <a href="#" class="search-icon-link">
-              <div class="search-icon">
-                  <i class="fas fa-search"></i>
-              </div>
-          </a>
-          <a href="index.html" class="logo-link ">
-              <img src="../assets/image/logo2_transparent.png" alt="" class="header-middle__logo logo-link__advice">
-          </a>
+        </div>
+        <a href="#" class="search-icon-link">
+          <div class="search-icon">
+            <i class="fas fa-search"></i>
+          </div>
+        </a>
+        <a href="index.html" class="logo-link ">
+          <img src="../assets/image/logo2_transparent.png" alt="" class="header-middle__logo logo-link__advice">
+        </a>
 
       </div>
 
-  </div>
+    </div>
   </div>
   <!-- Header End -->
 
@@ -399,24 +404,7 @@
     </div>
     <div class="shopping__cart__list">
       <h4 class="shopping__cart__header">Sản phẩm đã thêm</h4>
-      <ul class="cart__list__container">
-        <!-- <li class="cart__list__item">
-            <img src="https://upload.api.edoctor.io/v1/attachment/image/5f7cc2741880ec001260c2ab/original" alt="sản phẩm đã thêm" class="item__img">
-            <div class="item__info">
-              <div class="item__header">
-                <h5 class="item__name">Kiêm tiêm dùng cho bút tiêm</h5>
-                <span class="item__price">2000000đ</span>
-                <span class="item__qnt">x2</span>
-              </div>
-              <div class="item__body">
-                <span class="items__price__total">Tổng: 3000000</span>
-                <span class="item__cart__edit"><i class="fas fa-pencil-alt"></i></span> -->
-        <!-- <span class="item__cart__edit"><i class="far fa-trash-alt"></i></span> -->
-        <!-- <span class="item__cart__edit"><i class="fas fa-trash-alt"></i></span>
-              </div>
-            </div>
-          </li> -->
-      </ul>
+      <ul class="cart__list__container"></ul>
       <div class="btn__buy__cart">
         <button class="buy__confirm">Mua</button>
       </div>
@@ -446,29 +434,52 @@
   <div class="modal">
     <div class="modal__overlay"></div>
     <div class="modal__body">
-      <!-- <div class="modal__body__inner">
-        <a href="#" class="product-link product-link--click">
-          <div class="product__image__wrapper">
-            <img
-              src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-              alt="Combo hỗ trợ điều trị covid-19">
-          </div>
-          <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-          <div class="product__price product-link__price">220.500 ₫
-            <div class="product__number">
-              <i class="fas fa-minus-circle minus"></i>
-              <span class="number">1</span>
-              <i class="fas fa-plus-circle plus"></i>
-            </div>
-          </div>
-          <div class="product-buy">
-            <button class="btn__buy">Thêm vào giỏ hàng</button>
-          </div>
-        </a>
+      <!-- <h2>Nhập thông tin giao hàng</h2>
+      <div class="info__container">
+        <div class="name__container info__content">
+          <span>Họ tên</span>
+          <input type="text" required placeholder="vui lòng nhập tên của bạn" class="name__value">
+        </div>
+        <div class="tel__container info__content">
+          <span>Số điện thoại</span>
+          <input type="text" required placeholder="Vui lòng nhập số điện thoại" class="tel__value">
+        </div>
+        <div class="address__container info__content">
+          <span>Địa chỉ</span>
+          <input type="text" required placeholder="Vui lòng nhập địa chỉ" class="address__value">
+          <input id="origin" name="origin" required="" type="hidden" /></div>
+        </div>
+        <div class="current__address">
+          Chọn địa chỉ hiện tại
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="status__container">
+          <div class="status__seeking">Đang tìm nhà thuốc gần bạn...</div>
+          <div class="status__seeked">Đã tìm thấy</div>
+          <div class="status__fail">Không tìm nhà thuốc gần bạn</div>
+        </div>
+        <div class="btn__status__container">
+          <button class="btn__status btn__seeking">Tìm kiếm</button>
+        </div>
       </div> -->
     </div>
   </div>
+  </div>
+  <!-- <script>
+    $(function () {
+      // add input listeners
+      google.maps.event.addDomListener(window, 'load', function () {
+        var from_places = new google.maps.places.Autocomplete(document.querySelector('.address__value'));
+        google.maps.event.addListener(from_places, 'place_changed', function () {
+          var from_place = from_places.getPlace();
+          var from_address = from_place.formatted_address;
+          $('#origin').val(from_address);
+        });
+      });
+    });
+  </script> -->
 </body>
+<script src="../js/map.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/order.js"></script>
 

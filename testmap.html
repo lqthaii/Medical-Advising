@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script defer
-    src="https://maps.googleapis.com/maps/api/js?libraries=places&language=vi&key=AIzaSyCmI_chnPFkO1WciljeoE1fYfetUc25DR0"
+    src="https://maps.googleapis.com/maps/api/js?libraries=places&language=vi&key=AIzaSyASFAoOdtLHSx-Twjx_jUwDa108QnnSWfg"
     type="text/javascript"></script>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet" />
 </head>
@@ -88,6 +88,7 @@
             var distance = response.rows[0].elements[0].distance;
             var duration = response.rows[0].elements[0].duration;
             console.log(response.rows[0].elements[0].distance);
+            console.log(distance,duration);
             var distance_in_kilo = distance.value / 1000; // the kilom
             var distance_in_mile = distance.value / 1609.34; // the mile
             var duration_text = duration.text;

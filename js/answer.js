@@ -43,7 +43,6 @@ answer.forEach((item, index) => {
     const answerArea = item.parentNode.parentNode.children[2];
     const answerBox = document.querySelectorAll(".answer__box");
     if (document.querySelector(".answer__content")) {
-      console.log(1);
       answerBox[
         index
       ].innerHTML = `<textarea rows="5" id="answer__content__textarea" name="questionContent"
