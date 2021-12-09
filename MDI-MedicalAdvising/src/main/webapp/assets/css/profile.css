@@ -1,0 +1,100 @@
+.profile__container {
+  padding: 20px 48px;
+  cursor: default;
+}
+.profile__content {
+}
+.profile__header {
+}
+.avatar {
+  width: 30%;
+  position: relative;
+  margin-left: 23px;
+}
+.avatar__hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  left: 0;
+  max-width: 100px;
+  min-width: 100px;
+  max-height: 100px;
+  min-height: 100px;
+  border-radius: 50px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.avatar__hover:hover {
+  opacity: 1;
+}
+.edit__avatar {
+  font-size: 1.8rem;
+  margin-top: 40%;
+  transition: color 0.3s;
+}
+.avatar__img {
+  max-width: 100px;
+  min-width: 100px;
+  max-height: 100px;
+  min-height: 100px;
+  border-radius: 50px;
+  border: 2px solid var(--main-color);
+  cursor: pointer;
+  object-fit: cover;
+}
+.avatar__label {
+  position: absolute;
+  cursor: pointer;
+  padding: 3px;
+  opacity: 1;
+  top: 38%;
+  left: 37%;
+  opacity: 0;
+}
+.avatar__label:hover + .edit__avatar {
+  color: var(--hover-color);
+}
+#upload-avatar {
+  position: absolute;
+  z-index: -1;
+  display: none;
+}
+.profile__name {
+  font-size: 1.4rem;
+  display: inline-block;
+  position: relative;
+}
+.edit-info {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--main-color);
+  background-color: var(--background-color);
+}
+/* Body */
+.profile__body h3 {
+  padding: 5px;
+  background: var(--hover-color);
+  border-radius: 8px;
+  color: var(--white-color);
+}
+.info__content {
+  margin-bottom: 8px;
+}
+.edit-info:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.info__name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-right: 20px;
+  width: 85px;
+  display: inline-block;
+}
+.info-span {
+  margin-right: 15px;
+  font-family: "Font Awesome 5 Free";
+  font-size: 1.2rem;
+}
