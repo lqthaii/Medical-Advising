@@ -27,6 +27,7 @@ public class AccountServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
+
         switch (action) {
             case "logout":
                 logoutUser(request,response);

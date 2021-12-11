@@ -1,0 +1,7 @@
+.question__answer__similar__container {
+  padding: 5px 10px;
+}
+.question__answer__similar__container a {
+  text-decoration: none;
+  color: var(--text-color);
+}

@@ -5,16 +5,26 @@ public class Customer {
     String identityCard;
     String fullName;
     String numberPhone;
+    String birthday;
     Account account;
     public Customer() {
     }
 
-    public Customer(int id, String identityCard, String fullName, String numberPhone, Account account) {
+    public Customer(int id, String identityCard, String fullName, String numberPhone, String birthday, Account account) {
         this.id = id;
         this.identityCard = identityCard;
         this.fullName = fullName;
         this.numberPhone = numberPhone;
+        this.birthday = birthday;
         this.account = account;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public int getId() {

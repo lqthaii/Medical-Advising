@@ -15,7 +15,7 @@ import java.util.List;
 public class AccountRepository {
     BaseRepository baseRepository = new BaseRepository();
 
-    public void addAccount(String username, String password, String email,String name) {
+    public boolean addAccount(String username, String password, String email, String name) {
         String sql = "insert into account values (?,?,?,?)";
         String sqlCustomer = "insert into customer(full_name,user_name) value(?,?)";
         PreparedStatement preparedStatement = null;
@@ -29,14 +29,19 @@ public class AccountRepository {
             preparedStatement.setInt(4, 1);
             preparedStatement.executeUpdate();
             preparedStatement1 = connection.prepareStatement(sqlCustomer);
-            preparedStatement1.setString(1,name);
-            preparedStatement1.setString(2,username);
-            preparedStatement1.executeUpdate();
+            preparedStatement1.setString(1, name);
+            preparedStatement1.setString(2, username);
+            int row = preparedStatement1.executeUpdate();
+            if (row > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
-    public boolean checkLogin(String username, String password){
+
+    public boolean checkLogin(String username, String password) {
         boolean isCheck = false;
         String sql = "SELECT * FROM medical_advising.account where user_name = ? and `password`=? ";
         PreparedStatement preparedStatement = null;
@@ -46,9 +51,9 @@ public class AccountRepository {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 isCheck = true;
-            }else{
+            } else {
                 isCheck = false;
             }
         } catch (SQLException e) {
@@ -56,7 +61,8 @@ public class AccountRepository {
         }
         return isCheck;
     }
-    public TypeAccount getTypeAccount(int id){
+
+    public TypeAccount getTypeAccount(int id) {
         TypeAccount typeAccount = null;
         String sql = "select * from type_account where id = ?";
         PreparedStatement preparedStatement = null;
@@ -65,15 +71,16 @@ public class AccountRepository {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                typeAccount = new TypeAccount(id,resultSet.getString("type_name"));
+            while (resultSet.next()) {
+                typeAccount = new TypeAccount(id, resultSet.getString("type_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return typeAccount;
     }
-    public Account getAccount(String username){
+
+    public Account getAccount(String username) {
         Account account = new Account();
         String sql = "select * from `account` where user_name = ?";
         PreparedStatement preparedStatement = null;
@@ -82,7 +89,7 @@ public class AccountRepository {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 account.setUserName(resultSet.getString("user_name"));
                 account.setEmail(resultSet.getString("email"));
                 account.setPassWord(resultSet.getString("password"));
@@ -94,7 +101,8 @@ public class AccountRepository {
         }
         return account;
     }
-    public Customer getCustomer(String username){
+
+    public Customer getCustomer(String username) {
         Customer customer = new Customer();
         String sql = "select id,full_name from customer inner join " +
                 " `account` on customer.user_name = `account`.user_name " +
@@ -105,7 +113,7 @@ public class AccountRepository {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 customer.setFullName(resultSet.getString("full_name"));
                 customer.setId(resultSet.getInt("id"));
             }
@@ -114,7 +122,8 @@ public class AccountRepository {
         }
         return customer;
     }
-    public Doctor getDoctor(String username){
+
+    public Doctor getDoctor(String username) {
         Doctor doctor = new Doctor();
         String sql = "select id,identity_card,full_name,education,specialized,number_phone,address from doctor inner join " +
                 " `account` on doctor.user_name = `account`.user_name " +
@@ -125,7 +134,7 @@ public class AccountRepository {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 doctor.setId(resultSet.getInt("id"));
                 doctor.setIdentityCard(resultSet.getString("identity_card"));
                 doctor.setFullName(resultSet.getString("full_name"));
@@ -139,6 +148,7 @@ public class AccountRepository {
         }
         return doctor;
     }
+
     public List<TypeAccount> getAllTypeAccount() {
         List<TypeAccount> typeAccounts = new ArrayList<>();
         try {

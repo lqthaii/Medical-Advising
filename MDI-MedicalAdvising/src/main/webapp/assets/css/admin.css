@@ -2657,6 +2657,9 @@ mark,
 .dropdown:hover .drop-item{
   display: block !important;
 }
+.bg-custom {
+  background-color: #248eff !important;
+}
 .modal__body{
   padding: 40px 20px;
   text-align: center;

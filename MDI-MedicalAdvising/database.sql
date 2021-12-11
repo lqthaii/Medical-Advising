@@ -71,7 +71,6 @@ title varchar(50),
 question varchar(1000),
 reply varchar(10000),
 `status` int);
-select * from doctor;
 create table pharmacies(
 business_license_number varchar(11) primary key,
 pharmacies_name varchar(10),

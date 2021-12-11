@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.NumberFormat" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 23/11/2021
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,15 +20,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
           integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../assets/font/fontawesome/css/all.css">
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/order.css">
-    <link rel="icon" href="../assets/image/881599_medical_512x512.png" type="image/x-icon">
-    <script type="text/javascript" src="../js/map.js"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
-    <script type="text/javascript" src="../js/order.js"></script>
+    <link rel="stylesheet" href="assets/font/fontawesome/css/all.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/order.css">
+    <link rel="icon" href="assets/image/881599_medical_512x512.png" type="image/x-icon">
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/order.js"></script>
     <title>Medical Advice</title>
+    <style>
+        .cart:hover{
+
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -42,20 +49,13 @@
                     </h3>
                     <ul class="category-list">
                         <li class="category-item category-item--active">
-                            <a href="#" class="category-item__link category-item__link--selected">Tất cả</a>
+                            <a href="/medical?actionUser=pharma" class="category-item__link category-item__link--selected">Tất cả</a>
                         </li>
+                        <c:forEach items="#{typeDrugs}" var="typeDrug">
                         <li class="category-item">
-                            <a href="#" class="category-item__link">Covid-19</a>
+                            <a href="/medical?actionUser=drugById&id=${typeDrug.getId()}" class="category-item__link">${typeDrug.getName()}</a>
                         </li>
-                        <li class="category-item">
-                            <a href="#" class="category-item__link">Thuốc</a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-item__link">Dụng cụ y tế</a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-item__link">Sản phẩm khác</a>
-                        </li>
+                        </c:forEach>
                     </ul>
                 </nav>
             </div>
@@ -63,159 +63,24 @@
             <div class="grid__column-9">
                 <div class="product-container">
                     <div class="grid__row">
+                        <c:forEach items="${drugs}" var="drug">
                         <div class="grid__column-3">
+                            <div style="background-color: var(--white-color);">
                             <a href="#" class="product-link">
                                 <div class="product__image__wrapper">
                                     <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
+                                            src="data:image/jpg;base64,${drug.getImage()}"
+                                            alt="Combo hỗ trợ điều trị covid-19" style="height: 150px; object-fit: cover">
                                 </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
+                                <p class="product__name"><b>${drug.getName()}</b></p>
+                                <div class="product__price" style="color: #ee4d2d">${drug.priceFormat()} ₫
+
                                     <i class="fas fa-cart-plus cart-icon"></i>
                                 </div>
                             </a>
+                            </div>
                         </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img src="https://upload.api.edoctor.io/v1/attachment/image/5f7cc2741880ec001260c2ab/original"
-                                         alt="KIÊM TIÊM DÙNG CHO BÚT TIÊM NOVOFINE 31G">
-                                </div>
-                                <p class="product__name">KIÊM TIÊM DÙNG CHO BÚT TIÊM NOVOFINE 31G</p>
-                                <div class="product__price">2.230.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img src="https://upload.api.edoctor.io/v1/attachment/image/5f6caaed84c6610ef671c7cc/original"
-                                         alt="HAND SANITISER 100ML DR.BRAND (HƯƠNG CAM QUẾ)">
-                                </div>
-                                <p class="product__name">HAND SANITISER 100ML DR.BRAND (HƯƠNG CAM QUẾ)</p>
-                                <div class="product__price">123.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img src="https://upload.api.edoctor.io/v1/attachment/image/5f6caaed84c6610ef671c7cd/original"
-                                         alt="HAND SANITISER 100ML DR.BRAND (HƯƠNG BẠC HÀ)">
-                                </div>
-                                <p class="product__name">HAND SANITISER 100ML DR.BRAND (HƯƠNG BẠC HÀ)</p>
-                                <div class="product__price">342.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a href="#" class="product-link">
-                                <div class="product__image__wrapper">
-                                    <img
-                                            src="https://edoctor.s3.ap-southeast-1.amazonaws.com/epharmacy_product_image/2021/8/20/4f545d17-9953-414f-ae1b-e4e2e6ff230c.png"
-                                            alt="Combo hỗ trợ điều trị covid-19">
-                                </div>
-                                <p class="product__name">COMBO HỖ TRỢ ĐIỀU TRỊ F0 COVID-19 CHO NGƯỜI CÁCH LY TẠI NHÀ</p>
-                                <div class="product__price">220.500 ₫
-                                    <i class="fas fa-cart-plus cart-icon"></i>
-                                </div>
-                            </a>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

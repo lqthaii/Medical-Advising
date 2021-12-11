@@ -84,7 +84,7 @@
 }
 
 .product__price {
-  color: var(--dark-color);
+  color: #ee4d2d;
   font-size: 1.4rem;
   font-weight: 600;
   font-family: Roboto, sans-serif;

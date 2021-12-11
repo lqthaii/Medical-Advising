@@ -9,7 +9,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Medical Advice</title>
+    <link rel="icon" href="/assets/image/881599_medical_512x512.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+          integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 
@@ -17,9 +21,9 @@
             box-sizing: border-box
         }
 
-        body {
+/*        body {
             font-family: 'Noto Sans JP', sans-serif;
-        }
+        }*/
 
         h1, label {
             color: DodgerBlue;
@@ -135,8 +139,9 @@
     </style>
 </head>
 <body>
+<div class="app">
 <jsp:include page="header.jsp"/>
-<div style="margin-top: 100px"></div>
+<div style="margin-top: 130px"></div>
 <form action="/account?actionUser=login" method="post">
     <div class="container">
         <c:if test="${message!=null}">
@@ -165,5 +170,6 @@
 </form>
 <div style="margin-top: 300px"></div>
 <jsp:include page="footer.jsp"/>
+</div>
 </body>
 </html>

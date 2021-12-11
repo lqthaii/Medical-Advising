@@ -92,20 +92,20 @@
                 <div class="grid__column-9">
                     <div class="question">
                         <div class="question__form">
+                            <c:if test="${success!=null}">
+                                <div class="alert-success">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                        ${success}
+                                </div>
+                            </c:if>
+                            <c:if test="${fail!=null}">
+                                <div class="alert-fail">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                        ${fail}
+                                </div>
+                            </c:if>
                             <form action="/question?action=question" method="post">
                                 <div class="question__form__container">
-                                    <c:if test="${success!=null}">
-                                        <div class="alert-success">
-                                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                                                ${success}
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${fail!=null}">
-                                        <div class="alert-fail">
-                                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                                                ${fail}
-                                        </div>
-                                    </c:if>
                                     <h3>Đặt câu hỏi miễn phí</h3>
                                     <div class="question__content">
                                     <h4>Tiêu đề</h4>

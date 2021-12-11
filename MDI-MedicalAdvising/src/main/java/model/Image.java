@@ -1,17 +1,18 @@
 package model;
 
+import java.sql.Blob;
+
 public class Image {
     int id;
-    private byte[] imageData;
-    private String imageFileName;
-
+    String fileName;
+    Blob fileData;
     public Image() {
     }
 
-    public Image(int id, byte[] imageData, String imageFileName) {
+    public Image(int id, String fileName, Blob fileData) {
         this.id = id;
-        this.imageData = imageData;
-        this.imageFileName = imageFileName;
+        this.fileName = fileName;
+        this.fileData = fileData;
     }
 
     public int getId() {
@@ -22,19 +23,20 @@ public class Image {
         this.id = id;
     }
 
-    public byte[] getImageData() {
-        return imageData;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public String getImageFileName() {
-        return imageFileName;
+    public Blob getFileData() {
+        return fileData;
     }
 
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setFileData(Blob fileData) {
+        this.fileData = fileData;
     }
+
 }

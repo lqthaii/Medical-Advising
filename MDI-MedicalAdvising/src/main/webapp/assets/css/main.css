@@ -54,10 +54,11 @@
 
 .navbar__menu__user__avt {
   position: absolute;
+  margin-left: auto;
   width: 2.8rem;
   height: 2.8rem;
   top: 2px;
-  right: 2px;
+  /*right: 2px;*/
   border-radius: 50px;
   object-fit: cover;
 }

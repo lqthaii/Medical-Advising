@@ -1,20 +1,24 @@
 package controller;
 
-import model.Account;
-import model.Customer;
-import model.TypeAccount;
+import model.*;
 import service.AccountService;
 import service.AdminService;
 import service.CustomerService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.Part;
+import java.io.*;
 import java.util.List;
 
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
 @WebServlet(name = "AdminServlet", value = "/admin")
 public class AdminServlet extends HttpServlet {
     AdminService adminService = new AdminService();
@@ -26,15 +30,25 @@ public class AdminServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
-        switch (action) {
-            case "add":
-                addCustomer(request,response);
-                break;
-            case "editCustomer":
-                editCustomer(request,response);
-                break;
-            default:
-                showControll(request, response);
+        if (request.getSession().getAttribute("account") == null) {
+            response.sendRedirect("errorlogin.jsp");
+        } else {
+            switch (action) {
+                case "add":
+                    addCustomer(request, response);
+                    break;
+                case "editCustomer":
+                    editCustomer(request, response);
+                    break;
+                case "addDrug":
+                    addDrug(request, response);
+                    break;
+                case "addType":
+                    addTypeDrug(request, response);
+                    break;
+                default:
+                    showControll(request, response);
+            }
         }
     }
 
@@ -43,29 +57,46 @@ public class AdminServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
-        switch (action) {
-            case "customer":
-                showCustomerController(request, response);
-                break;
-            case "editCustomer":
-                showeditCustomer(request, response);
-                break;
-            case "deleteCustomer":
-                deleteCustomer(request, response);
-                break;
-            case "addCustomer":
-                showFormAddCustomer(request,response);
-                break;
-            default:
-                showControll(request, response);
+        if (request.getSession().getAttribute("account") == null) {
+            response.sendRedirect("error.jsp");
+        } else {
+            switch (action) {
+                case "customer":
+                    showCustomerController(request, response);
+                    break;
+                case "editCustomer":
+                    showeditCustomer(request, response);
+                    break;
+                case "deleteCustomer":
+                    deleteCustomer(request, response);
+                    break;
+                case "addCustomer":
+                    showFormAddCustomer(request, response);
+                    break;
+                case "drugManager":
+                    showDrugManager(request, response);
+                    break;
+                case "addDrug":
+                    showFormAddDrug(request, response);
+                    break;
+                case "addTypeDrug":
+                    showFormAddTypeDrug(request, response);
+                    break;
+                default:
+                    showControll(request, response);
+            }
         }
     }
 
     private void showControll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int doctorStatic = this.adminService.DoctorStatic();
         int customerStatic = this.adminService.CustomerStatic();
+        int questionStatic = this.adminService.QuestionrStatic();
+        List<Customer> customers = this.adminService.getFiveUser();
         request.setAttribute("doctorStatic", doctorStatic);
         request.setAttribute("customerStatic", customerStatic);
+        request.setAttribute("questionStatic", questionStatic);
+        request.setAttribute("customers", customers);
         request.getRequestDispatcher("/Admin/index.jsp").forward(request, response);
     }
 
@@ -107,24 +138,96 @@ public class AdminServlet extends HttpServlet {
         String username = request.getParameter("username");
         String psw = request.getParameter("psw");
         String name = request.getParameter("name");
-        this.accountService.addAccount(username, psw, email, name);
-        response.sendRedirect("/admin");
+        boolean isCheck = this.accountService.addAccount(username, psw, email, name);
+        if (isCheck) {
+            String messeger = "Bạn đã thêm thuốc tên " + name + " thành công!";
+            request.setAttribute("messeger", messeger);
+        } else {
+            String error = "Lỗi sever vui lòng thử lại sau";
+            request.setAttribute("error", error);
+        }
+        List<Customer> customers = this.adminService.getAllCustomer();
+        request.setAttribute("customers", customers);
+        request.getRequestDispatcher("/Admin/user.jsp").forward(request, response);
     }
+
     private void showFormAddCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("action", "add");
         List<Customer> customers = this.adminService.getAllCustomer();
         request.setAttribute("customers", customers);
         request.getRequestDispatcher("/Admin/user.jsp").forward(request, response);
     }
+
+    private void showFormAddDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Drug> drugs = this.adminService.getAllDrug();
+        List<TypeDrug> typeDrugs = this.adminService.getAllTypeDrug();
+        request.setAttribute("drugs", drugs);
+        request.setAttribute("typeDrugs", typeDrugs);
+        request.setAttribute("action", "add");
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+    }
+    private void showFormAddTypeDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Drug> drugs = this.adminService.getAllDrug();
+        request.setAttribute("drugs", drugs);
+        request.setAttribute("action", "addType");
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+    }
+
     private void editCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int typeAccount = Integer.parseInt(request.getParameter("typeAccount"));
-        if(typeAccount == 1){
+        if (typeAccount == 1) {
             int id = Integer.parseInt(request.getParameter("id"));
             Customer customer = this.customerService.getCustomer(id);
             String name = request.getParameter("name");
             customer.setFullName(name);
-            boolean isCheck = this.adminService.editCustomer(id,customer);
+            this.adminService.editCustomer(id, customer);
         }
     }
+
+    private void showDrugManager(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Drug> drugs = this.adminService.getAllDrug();
+        request.setAttribute("drugs", drugs);
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+    }
+
+    private void addDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        TypeDrug typeDrug = this.adminService.getTypeDrug(Integer.parseInt(request.getParameter("type")));
+        String price = request.getParameter("price");
+        Part part = request.getPart("image");
+        InputStream image = part.getInputStream();
+        Drug drug = new Drug();
+        drug.setName(name);
+        drug.setTypeDrug(typeDrug);
+        drug.setDescription(description);
+        drug.setPrice(Double.parseDouble(price));
+        boolean isCheck = this.adminService.addDrug(drug, image);
+        if (isCheck) {
+            String messeger = "Bạn đã thêm thuốc tên " + name + " thành công!";
+            request.setAttribute("messeger", messeger);
+        } else {
+            String error = "Lỗi sever vui lòng thử lại sau";
+            request.setAttribute("error", error);
+        }
+        List<Drug> drugs = this.adminService.getAllDrug();
+        request.setAttribute("drugs", drugs);
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+    }
+    private void addTypeDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String typeName = request.getParameter("typeName");
+        boolean isCheck = this.adminService.addTypeDrug(typeName);
+        if (isCheck) {
+            String messeger = "Bạn đã thêm loại thuốc " + typeName + " thành công!";
+            request.setAttribute("messeger", messeger);
+        } else {
+            String error = "Lỗi sever vui lòng thử lại sau";
+            request.setAttribute("error", error);
+        }
+        List<Drug> drugs = this.adminService.getAllDrug();
+        request.setAttribute("drugs", drugs);
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+    }
 }
+
 

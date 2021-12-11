@@ -34,11 +34,15 @@ public class QuestionServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
+        if(request.getSession().getAttribute("account")==null)
+        {
+            response.sendRedirect("error.jsp");
+        }else{
         switch (action){
             case "questionDetail":
                 showDetailQuestion(request,response);
                 break;
-        }
+        }}
 
     }
 

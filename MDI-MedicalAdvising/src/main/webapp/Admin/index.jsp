@@ -1,3 +1,5 @@
+<%@ page import="model.Admin" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -29,9 +31,10 @@
 <body>
 <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <jsp:include page="navtop.jsp"/>
+    <%--<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="https://raw.githubusercontent.com/BootstrapDash/PurpleAdmin-Free-Admin-Template/62c7c39e98f107b89af42ef9826923d8ae0a87c8/assets/images/logo.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo" href="/admin"><img src="https://raw.githubusercontent.com/BootstrapDash/PurpleAdmin-Free-Admin-Template/62c7c39e98f107b89af42ef9826923d8ae0a87c8/assets/images/logo.svg" alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <ul class="navbar-nav navbar-nav-right">
@@ -42,7 +45,7 @@
                             <span class="availability-status online"></span>
                         </div>
                         <div class="nav-profile-text">
-                            <p class="mb-1 text-black">Nguyễn Anh Quốc</p>
+                            <p class="mb-1 text-black"> <%=((Admin) request.getSession().getAttribute("admin")).getFullName()%></p>
                         </div>
                     </a>
                     <div class="dropdown-menu navbar-dropdown drop-item">
@@ -62,11 +65,12 @@
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav>--%>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <jsp:include page="nav.jsp"/>
+        <%--<nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item nav-profile">
                     <a href="#" class="nav-link">
@@ -75,8 +79,8 @@
                             <!--change to offline or busy as needed-->
                         </div>
                         <div class="nav-profile-text d-flex flex-column">
-                            <span class="font-weight-bold mb-2">Nguyễn Anh Quốc</span>
-                            <span class="text-secondary text-small">Admin</span>
+                            <span class="font-weight-bold mb-2"><%=((Admin) request.getSession().getAttribute("admin")).getFullName()%></span>
+                            <span class="text-secondary text-small"><%=((Admin) request.getSession().getAttribute("admin")).getAccount().getTypeAccount().getTypeName()%></span>
                         </div>
                     </a>
                 </li>
@@ -93,25 +97,25 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./doctor.html">
+                    <a class="nav-link" href="./admin?actionUser=doctor">
                         <span class="menu-title">Bác sĩ</span>
                         <i class="mdi fas fa-user-md menu-icon"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./pharmacy.html">
+                    <a class="nav-link" href="./admin?actionUser=pharmacy">
                         <span class="menu-title">Nhà thuốc</span>
                         <i class="mdi fas fa-cannabis menu-icon"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./medicine.html">
+                    <a class="nav-link" href="/admin?actionUser=drugmanager">
                         <span class="menu-title">Quản lí thuốc</span>
                         <i class="mdi fas fa-capsules menu-icon"></i>
                     </a>
                 </li>
             </ul>
-        </nav>
+        </nav>--%>
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
@@ -125,7 +129,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item active" aria-current="page">
                                 <!-- <i class="fas fa-info-circle"></i> -->
-                                <span></span>Overview <i class="fas fa-info-circle text-primary"></i>
+                                <span></span>Trang tổng quan <i class="fas fa-info-circle text-primary"></i>
                             </li>
                         </ul>
                     </nav>
@@ -143,9 +147,9 @@
                     <div class="col-md-4 stretch-card grid-margin">
                         <div class="card bg-gradient-info card-img-holder text-white">
                             <div class="card-body">
-                                <h4 class="font-weight-normal mb-3">số lượng nhà thuốc <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                                <h4 class="font-weight-normal mb-3">Số lượng câu hỏi <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                                 </h4>
-                                <h2 class="mb-5">0</h2>
+                                <h2 class="mb-5">${questionStatic}</h2>
                             </div>
                         </div>
                     </div>
@@ -185,63 +189,31 @@
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Recent Tickets</h4>
+                                <h4 class="card-title">Danh sách tài khoản mới</h4>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th> Assignee </th>
-                                            <th> Subject </th>
-                                            <th> Status </th>
-                                            <th> Last Update </th>
-                                            <th> Tracking ID </th>
+                                            <th> ID </th>
+                                            <th> Tên người dùng </th>
+                                            <th> Họ tên </th>
+                                            <th> Email </th>
+                                            <th> Loại tài khoản </th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <c:forEach items="${customers}" var="customer">
                                         <tr>
                                             <td>
-                                                <img src="assets/images/faces/face1.jpg" class="mr-2" alt="image"> David Grey
+                                                 ${customer.getId()}
                                             </td>
-                                            <td> Fund is not recieved </td>
-                                            <td>
-                                                <label class="badge badge-gradient-success">DONE</label>
-                                            </td>
-                                            <td> Dec 5, 2017 </td>
-                                            <td> WD-12345 </td>
+                                            <td> ${customer.getAccount().getUserName()} </td>
+                                            <td> ${customer.getFullName()} </td>
+                                            <td> ${customer.getAccount().getEmail()} </td>
+                                            <td> <label class="badge badge-gradient-success">
+                                                    ${customer.getAccount().getTypeAccount().getTypeName()}</label></td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/faces/face2.jpg" class="mr-2" alt="image"> Stella Johnson
-                                            </td>
-                                            <td> High loading time </td>
-                                            <td>
-                                                <label class="badge badge-gradient-warning">PROGRESS</label>
-                                            </td>
-                                            <td> Dec 12, 2017 </td>
-                                            <td> WD-12346 </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/faces/face3.jpg" class="mr-2" alt="image"> Marina Michel
-                                            </td>
-                                            <td> Website down for one week </td>
-                                            <td>
-                                                <label class="badge badge-gradient-info">ON HOLD</label>
-                                            </td>
-                                            <td> Dec 16, 2017 </td>
-                                            <td> WD-12347 </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe
-                                            </td>
-                                            <td> Loosing control on server </td>
-                                            <td>
-                                                <label class="badge badge-gradient-danger">REJECTED</label>
-                                            </td>
-                                            <td> Dec 3, 2017 </td>
-                                            <td> WD-12348 </td>
-                                        </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
