@@ -33,8 +33,8 @@ public class AdminService {
         return this.adminRepository.deleteCustomer(id, username);
     }
 
-    public boolean editCustomer(int id, Customer customer) {
-        return this.adminRepository.editCustomer(id, customer);
+    public boolean editCustomer(Customer customer) {
+        return this.adminRepository.editCustomer( customer);
     }
 
     public List<Customer> getFiveUser() {
@@ -58,5 +58,14 @@ public class AdminService {
     }
     public boolean addTypeDrug(String name) {
         return this.adminRepository.addTypeDrug(name);
+    }
+    public boolean deleteDrug(Drug drug) {
+        return this.adminRepository.deleteDrug(drug);
+    }
+    public boolean editDrug(Drug drug, InputStream image) {
+        return this.adminRepository.editDrug(drug,image);
+    }
+    public List<Doctor> getAllDoctor() {
+        return this.adminRepository.getAllDoctor();
     }
 }

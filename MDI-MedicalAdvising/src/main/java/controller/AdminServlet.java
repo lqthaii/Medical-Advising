@@ -4,6 +4,7 @@ import model.*;
 import service.AccountService;
 import service.AdminService;
 import service.CustomerService;
+import service.QuestionService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -24,6 +25,7 @@ public class AdminServlet extends HttpServlet {
     AdminService adminService = new AdminService();
     CustomerService customerService = new CustomerService();
     AccountService accountService = new AccountService();
+    QuestionService questionService = new QuestionService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("actionUser");
@@ -31,7 +33,7 @@ public class AdminServlet extends HttpServlet {
             action = "";
         }
         if (request.getSession().getAttribute("account") == null) {
-            response.sendRedirect("errorlogin.jsp");
+            response.sendRedirect("error.jsp");
         } else {
             switch (action) {
                 case "add":
@@ -45,6 +47,9 @@ public class AdminServlet extends HttpServlet {
                     break;
                 case "addType":
                     addTypeDrug(request, response);
+                    break;
+                case "editDrug":
+                    editDrug(request,response);
                     break;
                 default:
                     showControll(request, response);
@@ -70,6 +75,9 @@ public class AdminServlet extends HttpServlet {
                 case "deleteCustomer":
                     deleteCustomer(request, response);
                     break;
+                case "deleteDrug":
+                    deleteDrug(request, response);
+                    break;
                 case "addCustomer":
                     showFormAddCustomer(request, response);
                     break;
@@ -82,6 +90,12 @@ public class AdminServlet extends HttpServlet {
                 case "addTypeDrug":
                     showFormAddTypeDrug(request, response);
                     break;
+                case "editDrug":
+                    showEditDrug(request, response);
+                    break;
+                case "doctor":
+                    showDoctorController(request,response);
+                    break;
                 default:
                     showControll(request, response);
             }
@@ -93,9 +107,13 @@ public class AdminServlet extends HttpServlet {
         int customerStatic = this.adminService.CustomerStatic();
         int questionStatic = this.adminService.QuestionrStatic();
         List<Customer> customers = this.adminService.getFiveUser();
+        List<TypeDrug> typeDrugs = this.adminService.getAllTypeDrug();
+        request.setAttribute("typeDrugs", typeDrugs);
         request.setAttribute("doctorStatic", doctorStatic);
         request.setAttribute("customerStatic", customerStatic);
         request.setAttribute("questionStatic", questionStatic);
+        List<Question> questions = this.questionService.getFiveQuestion();
+        request.setAttribute("questions", questions);
         request.setAttribute("customers", customers);
         request.getRequestDispatcher("/Admin/index.jsp").forward(request, response);
     }
@@ -104,6 +122,11 @@ public class AdminServlet extends HttpServlet {
         List<Customer> customers = this.adminService.getAllCustomer();
         request.setAttribute("customers", customers);
         request.getRequestDispatcher("/Admin/user.jsp").forward(request, response);
+    }
+    private void showDoctorController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Doctor> doctors = this.adminService.getAllDoctor();
+        request.setAttribute("doctors", doctors);
+        request.getRequestDispatcher("/Admin/doctor.jsp").forward(request, response);
     }
 
     private void showeditCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -116,6 +139,18 @@ public class AdminServlet extends HttpServlet {
         request.setAttribute("customers", customers);
         request.setAttribute("customer", customer);
         request.getRequestDispatcher("/Admin/user.jsp").forward(request, response);
+    }
+
+    private void showEditDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Drug drug = this.customerService.getDrug(id);
+        List<Drug> drugs = this.adminService.getAllDrug();
+        List<TypeDrug> typeDrugs = this.adminService.getAllTypeDrug();
+        request.setAttribute("typeDrugs", typeDrugs);
+        request.setAttribute("drugs", drugs);
+        request.setAttribute("action", "edit");
+        request.setAttribute("drug", drug);
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
     }
 
     private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -166,6 +201,7 @@ public class AdminServlet extends HttpServlet {
         request.setAttribute("action", "add");
         request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
     }
+
     private void showFormAddTypeDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Drug> drugs = this.adminService.getAllDrug();
         request.setAttribute("drugs", drugs);
@@ -174,14 +210,53 @@ public class AdminServlet extends HttpServlet {
     }
 
     private void editCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int typeAccount = Integer.parseInt(request.getParameter("typeAccount"));
-        if (typeAccount == 1) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            Customer customer = this.customerService.getCustomer(id);
-            String name = request.getParameter("name");
-            customer.setFullName(name);
-            this.adminService.editCustomer(id, customer);
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr);
+        String name = request.getParameter("name");
+        Account account = this.accountService.getAccount(request.getParameter("username"));
+        account.setEmail(request.getParameter("email"));
+        String birthday = request.getParameter("birthday");
+        String numberPhone = request.getParameter("numberphone");
+        Customer customer = new Customer(id, null, name, numberPhone, birthday, account);
+        boolean isCheck = this.adminService.editCustomer(customer);
+        if (isCheck) {
+            String success = "Sửa thông tin người dùng thành công";
+            request.setAttribute("messeger", success);
+        } else {
+            String fail = "Sửa thông tin thất bại!";
+            request.setAttribute("error", fail);
         }
+        List<Customer> customers = this.adminService.getAllCustomer();
+        request.setAttribute("customers", customers);
+        request.getRequestDispatcher("Admin/user.jsp").forward(request, response);
+    }
+
+    private void editDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idStr = request.getParameter("idDrug");
+        int id = Integer.parseInt(idStr);
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        TypeDrug typeDrug = this.adminService.getTypeDrug(Integer.parseInt(request.getParameter("type")));
+        String price = request.getParameter("price");
+        Part part = request.getPart("image");
+        InputStream image = part.getInputStream();
+        Drug drug = new Drug();
+        drug.setId(id);
+        drug.setName(name);
+        drug.setTypeDrug(typeDrug);
+        drug.setDescription(description);
+        drug.setPrice(Double.parseDouble(price));
+        boolean isCheck = this.adminService.editDrug(drug, image);
+        if (isCheck) {
+            String messeger = "Bạn đã sửa thuốc tên " + name + " thành công!";
+            request.setAttribute("messeger", messeger);
+        } else {
+            String error = "Lỗi sever vui lòng thử lại sau";
+            request.setAttribute("error", error);
+        }
+        List<Drug> drugs = this.adminService.getAllDrug();
+        request.setAttribute("drugs", drugs);
+        request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
     }
 
     private void showDrugManager(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -214,6 +289,7 @@ public class AdminServlet extends HttpServlet {
         request.setAttribute("drugs", drugs);
         request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
     }
+
     private void addTypeDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String typeName = request.getParameter("typeName");
         boolean isCheck = this.adminService.addTypeDrug(typeName);
@@ -227,6 +303,21 @@ public class AdminServlet extends HttpServlet {
         List<Drug> drugs = this.adminService.getAllDrug();
         request.setAttribute("drugs", drugs);
         request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+    }
+
+    private void deleteDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Drug drug = this.customerService.getDrug(id);
+        boolean isCheck = this.adminService.deleteDrug(drug);
+        if (isCheck) {
+            List<Drug> drugs = this.adminService.getAllDrug();
+            request.setAttribute("drugs", drugs);
+            request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+        } else {
+            List<Drug> drugs = this.adminService.getAllDrug();
+            request.setAttribute("drugs", drugs);
+            request.getRequestDispatcher("/Admin/medicine.jsp").forward(request, response);
+        }
     }
 }
 

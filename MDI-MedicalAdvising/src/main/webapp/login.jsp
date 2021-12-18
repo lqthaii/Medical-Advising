@@ -150,6 +150,12 @@
                     ${message}
             </div>
         </c:if>
+        <c:if test="${fail!=null}">
+            <div class="alert-fail">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    ${fail}
+            </div>
+        </c:if>
         <h1>Đăng Nhập</h1>
         <p>Vui lòng đăng nhập để sử dụng dịch vụ</p>
         <hr>

@@ -37,7 +37,7 @@
 </head>
 <body>
 <div class="app">
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="/header.jsp"/>
     <div style="margin-top: 100px"></div>
     <!-- Container Begin -->
     <div class="container">

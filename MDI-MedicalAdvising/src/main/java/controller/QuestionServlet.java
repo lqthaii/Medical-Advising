@@ -34,16 +34,15 @@ public class QuestionServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
-        if(request.getSession().getAttribute("account")==null)
-        {
+        if (request.getSession().getAttribute("account") == null) {
             response.sendRedirect("error.jsp");
-        }else{
-        switch (action){
-            case "questionDetail":
-                showDetailQuestion(request,response);
-                break;
-        }}
-
+        } else {
+            switch (action) {
+                case "questionDetail":
+                    showDetailQuestion(request, response);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -57,7 +56,7 @@ public class QuestionServlet extends HttpServlet {
                 inputReplyDoctor(request, response);
                 break;
             case "question":
-                inputQuestionCustomer(request,response);
+                inputQuestionCustomer(request, response);
                 break;
         }
     }
@@ -72,8 +71,10 @@ public class QuestionServlet extends HttpServlet {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         //sử dụng phương thức format() để định dạng ngày giờ hiện tại rồi gán cho chuỗi formatted
         String formatted = current.format(formatter);
+        List<Question> questions = this.questionService.getAllQuestionReply();
         //-----------------------------
-        boolean isCheck = this.questionService.uploadQuestion(id, question, title,formatted);
+        boolean isCheck = this.questionService.uploadQuestion(id, question, title, formatted);
+        request.setAttribute("questions", questions);
         if (isCheck) {
             String success = "Bạn đã gửi câu hỏi thành công, Bác sĩ sẽ trả lời câu hỏi của bạn trong giây lát";
             request.setAttribute("success", success);
@@ -108,25 +109,26 @@ public class QuestionServlet extends HttpServlet {
         if (isCheck) {
             String success = "Trả lời câu hỏi thành công";
             List<Question> questions = this.questionService.getAllQuestionNoReply();
-            request.setAttribute("questions",questions);
+            request.setAttribute("questions", questions);
             request.setAttribute("success", success);
             request.setAttribute("fail", null);
             request.getRequestDispatcher("Doctor/question.jsp").forward(request, response);
         } else {
             String fail = "Lỗi sever, vui lòng thử lại sau";
             List<Question> questions = this.questionService.getAllQuestionNoReply();
-            request.setAttribute("questions",questions);
+            request.setAttribute("questions", questions);
             request.setAttribute("fail", fail);
             request.setAttribute("success", null);
             request.getRequestDispatcher("Doctor/question.jsp").forward(request, response);
         }
     }
+
     private void showDetailQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Question question = this.questionService.getQuestion(id);
-        request.setAttribute("question",question);
+        request.setAttribute("question", question);
         List<Question> questions = this.questionService.getAllQuestionReply();
         request.setAttribute("questions", questions);
-        request.getRequestDispatcher("Customer/questiondetail.jsp").forward(request,response);
+        request.getRequestDispatcher("Customer/questiondetail.jsp").forward(request, response);
     }
 }

@@ -4,10 +4,9 @@ import model.Account;
 import model.Customer;
 import model.Doctor;
 import model.TypeAccount;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +20,21 @@ public class AccountRepository {
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement1 = null;
         Connection connection = baseRepository.getConnection();
+        String passwordMD5=null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");//MÃ HOÁ MD5 CHO PASSWORD
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            passwordMD5 = DatatypeConverter
+                    .printHexBinary(digest).toUpperCase();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, email);
-            preparedStatement.setString(3, password);
+            preparedStatement.setString(3, passwordMD5);
             preparedStatement.setInt(4, 1);
             preparedStatement.executeUpdate();
             preparedStatement1 = connection.prepareStatement(sqlCustomer);
@@ -43,13 +52,23 @@ public class AccountRepository {
 
     public boolean checkLogin(String username, String password) {
         boolean isCheck = false;
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        String myChecksum = DatatypeConverter
+                .printHexBinary(digest).toUpperCase();
         String sql = "SELECT * FROM medical_advising.account where user_name = ? and `password`=? ";
         PreparedStatement preparedStatement = null;
         Connection connection = baseRepository.getConnection();
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(2, myChecksum);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 isCheck = true;

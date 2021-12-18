@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-@WebServlet(name = "medicalServlet", urlPatterns = {"", "/medical"})
+@WebServlet(name = "medicalServlet", urlPatterns = {"","/medical"})
 public class MedicalServlet extends HttpServlet {
     AccountService accountService = new AccountService();
     QuestionService questionService = new QuestionService();
@@ -45,7 +45,11 @@ public class MedicalServlet extends HttpServlet {
                 showFormLogin(request, response);
                 break;
             case "profile":
-                showProfile(request, response);
+                if (request.getSession().getAttribute("account") == null) {
+                    response.sendRedirect("error.jsp");
+                } else {
+                    showProfile(request, response);
+                }
                 break;
             case "reply":
                 if (request.getSession().getAttribute("account") == null) {
@@ -57,6 +61,11 @@ public class MedicalServlet extends HttpServlet {
             case "drugById":
                 showListDrugById(request, response);
                 break;
+            case "drugDetail":
+                showDrugDetail(request,response);
+                break;
+            case "search":
+                showResultSearch(request,response);
             default:
                 index(request, response);
         }
@@ -64,11 +73,19 @@ public class MedicalServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        index(request, response);
     }
 
     private void listDrug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Drug> drugs = this.customerService.getAllDrug();
+        List<TypeDrug> typeDrugs = this.adminService.getAllTypeDrug();
+        request.setAttribute("drugs", drugs);
+        request.setAttribute("typeDrugs", typeDrugs);
+        request.getRequestDispatcher("Customer/store.jsp").forward(request, response);
+    }
+    private void showResultSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String search = request.getParameter("search");
+        List<Drug> drugs = this.customerService.getDrugByName(search);
         List<TypeDrug> typeDrugs = this.adminService.getAllTypeDrug();
         request.setAttribute("drugs", drugs);
         request.setAttribute("typeDrugs", typeDrugs);
@@ -125,15 +142,7 @@ public class MedicalServlet extends HttpServlet {
 
     private void showProfile(HttpServletRequest request, HttpServletResponse response) {
         try {
-            String message = null;
-            request.setAttribute("message", message);
-            try {
-                Customer customer = this.accountService.getCustomer(((Customer) request.getSession().getAttribute("customer")).getAccount().getUserName());
-                request.setAttribute("customer", customer);
-                request.getRequestDispatcher("profile.jsp").forward(request, response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            }
+            response.sendRedirect("Customer/profile.jsp");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -162,5 +171,13 @@ public class MedicalServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void showDrugDetail(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("idDrug"));
+        Drug drug = this.customerService.getDrug(id);
+        List<Drug> drugs = this.customerService.getDrugByType(drug.getTypeDrug().getId());
+        request.setAttribute("drug",drug);
+        request.setAttribute("drugs",drugs);
+        request.getRequestDispatcher("drugDetail.jsp").forward(request,response);
     }
 }

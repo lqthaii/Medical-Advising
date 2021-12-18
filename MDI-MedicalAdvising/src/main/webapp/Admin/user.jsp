@@ -90,6 +90,7 @@
                                         <th> Họ Tên</th>
                                         <th> Tên đăng nhập</th>
                                         <th> Số điện thoại</th>
+                                        <th> Ngày sinh</th>
                                         <th> Email</th>
                                         <th> Vai trò</th>
                                         <th class="th-control">Điều chỉnh</th>
@@ -102,6 +103,7 @@
                                             <td> ${customer.getFullName()} </td>
                                             <td> ${customer.getAccount().getUserName()} </td>
                                             <td> ${customer.getNumberPhone()} </td>
+                                            <td> ${customer.getBirthday()} </td>
                                             <td> ${customer.getAccount().getEmail()} </td>
                                             <td> ${customer.getAccount().getTypeAccount().getTypeName()} </td>
                                             <td>
@@ -111,11 +113,11 @@
                                                                 class=" btn-icon-prepend far fa-edit"></i>Sửa
                                                     </button>
                                                 </a>
-                                                <button class="btn btn-sm btn-icon-text btn-gradient-danger btn-delete" data-toggle="modal" data-target="#deleteModal">
+                                                <button class="btn btn-sm btn-icon-text btn-gradient-danger btn-delete" data-toggle="modal" data-target="#deleteModal-${customer.getId()}">
                                                     <i class=" btn-icon-prepend fas fa-trash-alt"></i>Xóa
                                                 </button>
                                                     <%--Modal delete--%>
-                                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                                <div class="modal fade" id="deleteModal-${customer.getId()}" tabindex="-1" role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
@@ -163,7 +165,7 @@
                                 <form class="forms-sample" method="post" action="/admin?actionUser=editCustomer">
                                     <div class="form-group">
                                         <label for="exampleTextarea1">ID</label>
-                                        <input class="form-control" disabled rows="4"
+                                        <input class="form-control" readonly rows="4"
                                                value="${customer.getId()}" name="id"/>
                                     </div>
                                     <div class="form-group">
@@ -173,13 +175,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleTextarea1">Username</label>
-                                        <input class="form-control" disabled  rows="4"
+                                        <input class="form-control" readonly  rows="4"
                                                value="${customer.getAccount().getUserName()}" name="username"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleTextarea1">Number Phone</label>
                                         <input class="form-control"  rows="4"
                                                value="${customer.getNumberPhone()}" name="numberphone"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleTextarea1">Birthday</label>
+                                        <input type="date" class="form-control"  rows="4"
+                                               value="${customer.getBirthday()}" name="birthday"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleTextarea1">Email</label>

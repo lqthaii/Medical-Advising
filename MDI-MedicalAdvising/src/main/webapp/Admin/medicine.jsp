@@ -118,11 +118,11 @@
                                                     </button>
                                                 </a>
                                                 <button class="btn btn-sm btn-icon-text btn-gradient-danger btn-delete"
-                                                        data-toggle="modal" data-target="#deleteModal">
+                                                        data-toggle="modal" data-target="#deleteModal-${drug.getId()}">
                                                     <i class=" btn-icon-prepend fas fa-trash-alt"></i>Xóa
                                                 </button>
                                                     <%--Modal delete--%>
-                                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                                <div class="modal fade" id="deleteModal-${drug.getId()}" tabindex="-1" role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
@@ -166,20 +166,25 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" id="add">Cập nhật thông tin</h4>
+                                <h4 class="card-title" id="edit">Cập nhật thông tin</h4>
                                 <br>
-                                <form class="forms-sample" enctype="multipart/form-data">
+                                <form class="forms-sample" enctype="multipart/form-data" action="/admin?actionUser=editDrug"
+                                      method="post">
+                                    <div class="form-group">
+                                        <label>ID</label>
+                                        <input type="text" class="form-control" name="idDrug" value="${drug.getId()}" readonly>
+                                    </div>
                                     <div class="form-group">
                                         <label>Tên thuốc</label>
-                                        <input type="text" class="form-control" placeholder="Nhập tên thuốc">
+                                        <input type="text" class="form-control" name="name" placeholder="Nhập tên thuốc" value="${drug.getName()}">
                                     </div>
                                     <div class="form-group">
                                         <label>Mô tả</label>
-                                        <textarea class="form-control" rows="4"></textarea>
+                                        <textarea class="form-control" rows="4" name="description"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Loại thuốc</label>
-                                        <select class="form-control" style="cursor: pointer;">
+                                        <select class="form-control" style="cursor: pointer;" name="type">
                                             <c:forEach items="${typeDrugs}" var="typeDrug">
                                                 <option value="${typeDrug.getId()}">${typeDrug.getName()}</option>
                                             </c:forEach>
@@ -187,7 +192,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Giá</label>
-                                        <input type="number" class="form-control" placeholder="Nhập giá">
+                                        <input type="number" class="form-control" placeholder="Nhập giá" name="price" value="${drug.getPrice()}">
                                     </div>
                                     <div class="form-group">
                                         <!-- <label>Ảnh</label>
@@ -200,15 +205,14 @@
                                           </div> -->
                                         <label>Ảnh</label>
                                         <div class="input-group">
-                                            <input class="form-control" type="file" accept="image/*" id="upload-photo"
-                                                   name="image">
+                                            <input class="form-control" type="file" accept="image/*" name="image">
                                             <div class="question__form__img-review">
                                                 <!-- js here -->
                                             </div>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-icon-text btn-gradient-info mr-2 btn-submit"><i
-                                            class="btn-icon-prepend fas fa-paper-plane"></i>Thêm
+                                            class="btn-icon-prepend fas fa-paper-plane"></i>Sửa
                                     </button>
                                     <button class="btn btn-icon-text btn-gradient-dark btn-reset"><i
                                             class=" btn-icon-prepend fas fa-redo-alt"></i>Đặt lại

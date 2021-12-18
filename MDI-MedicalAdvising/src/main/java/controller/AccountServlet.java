@@ -82,6 +82,7 @@ public class AccountServlet extends HttpServlet {
             if(account.getTypeAccount().getId()==1){
                 Customer customer = this.accountService.getCustomer(account.getUserName());
                 HttpSession session = request.getSession();
+                session.setAttribute("orderNum","0");
                 session.setAttribute("account",account);
                 session.setAttribute("customer",customer);
                 request.getRequestDispatcher("/index.jsp").forward(request,response);
@@ -101,7 +102,7 @@ public class AccountServlet extends HttpServlet {
             }
         }else {
             String message = "Sai tài khoản hoặc mật khẩu";
-            request.setAttribute("message",message);
+            request.setAttribute("fail",message);
             request.getRequestDispatcher("/login.jsp").forward(request,response);
         }
     }

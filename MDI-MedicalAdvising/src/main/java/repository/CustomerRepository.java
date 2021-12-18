@@ -40,6 +40,49 @@ public class CustomerRepository {
         }
         return customer;
     }
+    public List<Drug> getDrugByName(String name){
+        List<Drug> drugs = new ArrayList<>();
+        String sql = "SELECT * FROM drugs where name like ? ";
+        PreparedStatement preparedStatement = null;
+        Drug drug = null;
+        Connection connection = baseRepository.getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+name+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                drug = new Drug();
+                drug.setId(resultSet.getInt("id"));
+                drug.setPrice(resultSet.getDouble("price"));
+                drug.setName(resultSet.getString("name"));
+                drug.setDescription(resultSet.getString("description"));
+                drug.setTypeDrug(this.adminService.getTypeDrug(resultSet.getInt("type_drug")));
+                Blob blob = resultSet.getBlob("img");
+                InputStream inputStream = blob.getBinaryStream();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead = -1;
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                byte[] imageBytes = outputStream.toByteArray();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+
+                inputStream.close();
+                outputStream.close();
+                drug.setImage(base64Image);
+                drugs.add(drug);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return drugs;
+    }
 
     public List<Drug> getAllDrug() {
         List<Drug> drugs = new ArrayList<>();
@@ -124,5 +167,46 @@ public class CustomerRepository {
             e.printStackTrace();
         }
         return drugs;
+    }
+    public Drug getDrug(int id){
+        String sql = "SELECT * FROM drugs where id=? ";
+        PreparedStatement preparedStatement = null;
+        Drug drug = null;
+        Connection connection = baseRepository.getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                drug = new Drug();
+                drug.setId(resultSet.getInt("id"));
+                drug.setPrice(resultSet.getDouble("price"));
+                drug.setName(resultSet.getString("name"));
+                drug.setDescription(resultSet.getString("description"));
+                drug.setTypeDrug(this.adminService.getTypeDrug(resultSet.getInt("type_drug")));
+                Blob blob = resultSet.getBlob("img");
+                InputStream inputStream = blob.getBinaryStream();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead = -1;
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                byte[] imageBytes = outputStream.toByteArray();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+
+                inputStream.close();
+                outputStream.close();
+                drug.setImage(base64Image);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return drug;
     }
 }

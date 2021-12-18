@@ -1,6 +1,7 @@
 package repository;
 
 import model.Customer;
+import model.Doctor;
 import model.Question;
 import service.CustomerService;
 import service.DoctorService;
@@ -119,5 +120,30 @@ public class QuestionRepository {
             e.printStackTrace();
         }
         return false;
+    }
+    public List<Question> getFiveQuestion() {
+        List<Question> questions = new ArrayList<>();
+        try {
+            Connection connection = baseRepository.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultset = statement.executeQuery("select * from get5question order by id; ");
+            Question question = null;
+            while (resultset.next()) {
+                int id = resultset.getInt("id");
+                Customer customer = this.customerService.getCustomer(resultset.getInt("id_customer"));
+                Doctor doctor = this.doctorService.getDoctor(resultset.getInt("id_doctor"));
+                String questionCustomer = resultset.getString("question");
+                String timeQuestion = resultset.getString("time_question");
+                String timeAnswer = resultset.getString("time_answer");
+                String title = resultset.getString("title");
+                String reply = resultset.getString("reply");
+                int status = resultset.getInt("status");
+                question = new Question(id, title, customer,doctor,status, questionCustomer,reply,timeQuestion,timeAnswer);
+                questions.add(question);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return questions;
     }
 }

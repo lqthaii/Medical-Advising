@@ -23,4 +23,5 @@ public class QuestionService{
     public List<Question> getAllQuestionReply() {
         return this.questionRepository.getAllQuestionReply();
     }
+    public List<Question> getFiveQuestion() { return this.questionRepository.getFiveQuestion();}
 }

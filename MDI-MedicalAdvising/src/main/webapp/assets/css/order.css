@@ -58,7 +58,7 @@
   display: block;
   border-radius: 5px;
   padding: 16px;
-  margin-bottom: 24px;
+  /*margin-bottom: 24px;*/
 }
 .product__image__wrapper {
   padding-bottom: 16px;
@@ -81,6 +81,7 @@
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  text-transform: uppercase;
 }
 
 .product__price {
@@ -122,7 +123,7 @@
   background-color: var(--white-color);
   border-radius: 10px;
   box-shadow: 0 4px 32px rgb(36 142 255 / 18%);
-  display: none;
+  /*display: none;*/
 }
 .shopping__cart__header {
   font-size: 1.2rem;
@@ -241,6 +242,8 @@
   font-family: cursive;
   cursor: pointer;
 }
+
+
 
 .shopping__cart i {
   cursor: pointer;

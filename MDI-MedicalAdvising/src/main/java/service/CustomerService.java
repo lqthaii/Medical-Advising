@@ -18,4 +18,10 @@ public class CustomerService {
     public List<Drug> getDrugByType(int id) {
         return this.customerRepository.getDrugByType(id);
     }
+    public Drug getDrug(int id){
+        return this.customerRepository.getDrug(id);
+    }
+    public List<Drug> getDrugByName(String name){
+        return this.customerRepository.getDrugByName(name);
+    }
 }

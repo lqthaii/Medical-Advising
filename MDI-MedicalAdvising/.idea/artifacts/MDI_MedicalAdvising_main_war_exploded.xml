@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="MDI-MedicalAdvising.main:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/MDI_MedicalAdvising_main_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MDI-MedicalAdvising.main" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Gradle: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Gradle: mysql:mysql-connector-java:8.0.23" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0" />
+          <element id="library" level="project" name="Gradle: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.0" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="MDI-MedicalAdvising.main/web/Web Gradle : MDI-MedicalAdvising-1.0-SNAPSHOT.war" />
+    </root>
+  </artifact>
+</component>

@@ -2,7 +2,10 @@ package repository;
 
 import model.*;
 import service.AccountService;
+import service.CustomerService;
+import service.DoctorService;
 
+import javax.print.Doc;
 import javax.servlet.annotation.MultipartConfig;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,7 +19,6 @@ import java.util.List;
 public class AdminRepository {
     BaseRepository baseRepository = new BaseRepository();
     AccountService accountService = new AccountService();
-
     public Admin getAdmin(String username) {
         Admin admin = new Admin();
         String sql = "select id,full_name from `admin` inner join " +
@@ -96,6 +98,7 @@ public class AdminRepository {
                 customer.setAccount(this.accountService.getAccount(resultset.getString("user_name")));
                 customer.setNumberPhone(resultset.getString("number_phone"));
                 customer.setFullName(resultset.getString("full_name"));
+                customer.setBirthday(resultset.getString("birthday"));
                 customer.setIdentityCard(resultset.getString("identity_card"));
                 customer.setId(resultset.getInt("id"));
                 customers.add(customer);
@@ -104,6 +107,31 @@ public class AdminRepository {
             throwables.printStackTrace();
         }
         return customers;
+    }
+    public List<Doctor> getAllDoctor() {
+        List<Doctor> doctors = new ArrayList<>();
+        try {
+            Connection connection = baseRepository.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultset = statement.executeQuery("select * from `account`\n" +
+                    "inner join doctor on `account`.user_name = doctor.user_name");
+            Doctor doctor = null;
+            while (resultset.next()) {
+                doctor = new Doctor();
+                doctor.setAccount(this.accountService.getAccount(resultset.getString("user_name")));
+                doctor.setNumberPhone(resultset.getString("number_phone"));
+                doctor.setAddress(resultset.getString("address"));
+                doctor.setEducation(resultset.getString("education"));
+                doctor.setSpecialized(resultset.getString("specialized"));
+                doctor.setFullName(resultset.getString("full_name"));
+                doctor.setIdentityCard(resultset.getString("identity_card"));
+                doctor.setId(resultset.getInt("id"));
+                doctors.add(doctor);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return doctors;
     }
 
     public boolean deleteCustomer(int id, String username) {
@@ -121,7 +149,21 @@ public class AdminRepository {
         }
         return false;
     }
-
+    public boolean deleteDrug(Drug drug) {
+        String sql = "DELETE FROM drugs WHERE id=?";
+        PreparedStatement preparedStatement = null;
+        Connection connection = baseRepository.getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, drug.getId());
+            int row = preparedStatement.executeUpdate();
+            if (row > 0)
+                return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
     public boolean deleteAccount(String username) {
         String sql = "DELETE FROM Account WHERE user_name=?";
         PreparedStatement preparedStatement = null;
@@ -138,19 +180,48 @@ public class AdminRepository {
         return false;
     }
 
-    public boolean editCustomer(int id, Customer customer) {
-        String sql = "update customer set full_name= ? where id = ?";
+    public boolean editCustomer(Customer customer) {
+        String sqlCustomer = "update customer set full_name= ?, identity_card= ?, birthday=?, number_phone=? where id = ?";
+        String sqlAccount = "update account set email=? where user_name = ?";
         PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
         Connection connection = baseRepository.getConnection();
+        int row = 0;
         try {
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sqlCustomer);
             preparedStatement.setString(1, customer.getFullName());
-            preparedStatement.setInt(2, id);
-            int row = preparedStatement.executeUpdate();
-            if (row > 0)
+            preparedStatement.setString(2, customer.getIdentityCard());
+            preparedStatement.setString(3, customer.getBirthday());
+            preparedStatement.setString(4, customer.getNumberPhone());
+            preparedStatement.setInt(5, customer.getId());
+            preparedStatement1 = connection.prepareStatement(sqlAccount);
+            preparedStatement1.setString(1, customer.getAccount().getEmail());
+            preparedStatement1.setString(2, customer.getAccount().getUserName());
+            row += preparedStatement1.executeUpdate();
+            row += preparedStatement.executeUpdate();
+            if (row > 1)
                 return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+        return false;
+    }
+    public boolean editDrug(Drug drug, InputStream image) {
+        String sql = "update drugs set name=?,price=?,img=?,type_drug=?,description=? where id=?";
+        Connection connection = baseRepository.getConnection();
+        try {
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, drug.getName());
+            pstm.setDouble(2, drug.getPrice());
+            pstm.setBlob(3, image);
+            pstm.setInt(4, drug.getTypeDrug().getId());
+            pstm.setString(5, drug.getDescription());
+            pstm.setInt(6,drug.getId());
+            int row = pstm.executeUpdate();
+            if (row > 0)
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -177,26 +248,26 @@ public class AdminRepository {
         return customers;
     }
 
-    public boolean addDrug(Drug drug,InputStream image) {
+    public boolean addDrug(Drug drug, InputStream image) {
         Connection connection = baseRepository.getConnection();
         try {
-        String sql = "Insert into drugs(name,price,img,type_drug,description) value(?,?,?,?,?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
+            String sql = "Insert into drugs(name,price,img,type_drug,description) value(?,?,?,?,?)";
+            PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setString(1, drug.getName());
-            pstm.setDouble(2,drug.getPrice());
+            pstm.setDouble(2, drug.getPrice());
             pstm.setBlob(3, image);
-            pstm.setInt(4,drug.getTypeDrug().getId());
+            pstm.setInt(4, drug.getTypeDrug().getId());
             pstm.setString(5, drug.getDescription());
-           int row = pstm.executeUpdate();
-           if(row>0)
-               return true;
+            int row = pstm.executeUpdate();
+            if (row > 0)
+                return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public TypeDrug getTypeDrug(int id){
+    public TypeDrug getTypeDrug(int id) {
         TypeDrug typeDrug = null;
         String sql = "select * from type_drug where id = ?";
         PreparedStatement preparedStatement = null;
@@ -233,7 +304,7 @@ public class AdminRepository {
         return typeDrugs;
     }
 
-    public List<Drug> getAllDrug(){
+    public List<Drug> getAllDrug() {
         List<Drug> drugs = new ArrayList<>();
         try {
             Connection connection = baseRepository.getConnection();
@@ -255,7 +326,8 @@ public class AdminRepository {
         }
         return drugs;
     }
-    private String getBase64img(Blob blob){
+
+    private String getBase64img(Blob blob) {
         InputStream inputStream = null;
         try {
             inputStream = blob.getBinaryStream();
@@ -278,6 +350,7 @@ public class AdminRepository {
         byte[] imageBytes = outputStream.toByteArray();
         return Base64.getEncoder().encodeToString(imageBytes);
     }
+
     public boolean addTypeDrug(String name) {
         Connection connection = baseRepository.getConnection();
         try {
@@ -285,7 +358,7 @@ public class AdminRepository {
             PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setString(1, name);
             int row = pstm.executeUpdate();
-            if(row>0)
+            if (row > 0)
                 return true;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -25,20 +25,15 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/order.css">
     <link rel="icon" href="assets/image/881599_medical_512x512.png" type="image/x-icon">
-    <script type="text/javascript" src="js/map.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="js/order.js"></script>
     <title>Medical Advice</title>
     <style>
-        .cart:hover{
 
-        }
     </style>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="/header.jsp"/>
 <div style="margin-top: 100px"></div>
-<div class="container">
+<div class="container" style="min-height: 800px">
     <div class="grid">
         <div class="grid__row">
             <div class="grid__column-3">
@@ -66,16 +61,15 @@
                         <c:forEach items="${drugs}" var="drug">
                         <div class="grid__column-3">
                             <div style="background-color: var(--white-color);">
-                            <a href="#" class="product-link">
+                            <a href="/medical?actionUser=drugDetail&idDrug=${drug.getId()}" class="product-link">
                                 <div class="product__image__wrapper">
                                     <img
                                             src="data:image/jpg;base64,${drug.getImage()}"
-                                            alt="Combo hỗ trợ điều trị covid-19" style="height: 150px; object-fit: cover">
+                                            alt="${drug.getName()}" style="height: 150px; object-fit: cover">
                                 </div>
-                                <p class="product__name"><b>${drug.getName()}</b></p>
+                                <p class="product__name" style="text-transform: uppercase;"><b>${drug.getName()}</b></p>
                                 <div class="product__price" style="color: #ee4d2d">${drug.priceFormat()} ₫
-
-                                    <i class="fas fa-cart-plus cart-icon"></i>
+                                    <a href="/cart?actionUser=add&drugId=${drug.getId()}"><i class="fas fa-cart-plus cart-icon"></i></a>
                                 </div>
                             </a>
                             </div>
@@ -86,18 +80,12 @@
             </div>
         </div>
     </div>
-    <div class="shopping__cart">
+    <%--<div class="shopping__cart" >
         <i class="fas fa-cart-plus"></i>
         <span class="shopping__cart__number display--none">0</span>
-    </div>
-    <div class="shopping__cart__list">
-        <h4 class="shopping__cart__header">Sản phẩm đã thêm</h4>
-        <ul class="cart__list__container"></ul>
-        <div class="btn__buy__cart">
-            <button class="buy__confirm">Mua</button>
-        </div>
-    </div>
+    </div>--%>
 </div>
+
 <!-- Container End -->
 <jsp:include page="footer.jsp"/>
 </body>
