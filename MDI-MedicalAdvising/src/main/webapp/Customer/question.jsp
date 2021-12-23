@@ -77,7 +77,7 @@
             <div class="grid__row">
                 <div class="grid__column-9">
                     <div class="question">
-                        <div class="question__form">
+                        <div class="question__form" style="height: 525px">
                             <c:if test="${success!=null}">
                                 <div class="alert-success">
                                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -168,23 +168,7 @@
     <!-- Container End -->
     <!-- Container End -->
 
-    <!-- Footer Begin -->
-    <div class="footer-main">
-        <footer>
-            <div class="social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i
-                    class="fab fa-facebook-messenger"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a
-                    href="#"><i class="fab fa-instagram"></i></a></div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Trang chủ</a></li>
-                <li class="list-inline-item"><a href="#">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-            </ul>
-            <p class="copyright">Company Name © 2021</p>
-        </footer>
-    </div>
-    <!-- Footer End -->
+    <jsp:include page="/footer.jsp"/>
 </div>
 </body>
 <script src="../js/main.js"></script>

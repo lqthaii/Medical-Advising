@@ -37,6 +37,38 @@
             outline: none;
             margin-bottom: 8px;
         }
+        .pharmacy__info > h1{
+            text-align: center;
+            line-height: 1.6;
+        }
+        .name{
+            display: flex;
+        }
+        .question__info{
+            display: flex;
+            font-size: 10pt;
+        }
+        .datetime{
+            margin-left: 10px;
+        }
+        .content{
+            font-size: 13pt;
+            line-height: 1.6;
+        }
+        .question__item{
+            padding: 30px;
+        }
+        .question__title{
+            background-color: #3c97ff;
+            border-radius: 10px 10px 10px 10px;
+            color: white;
+            text-align: center;
+            line-height: 1.6;
+            padding-top: 15px;
+        }
+        .question__title >h1{
+            padding-bottom: 20px;
+        }
     </style>
 </head>
 <!--Start of Tawk.to Script-->
@@ -66,17 +98,25 @@
                         <div class="question__form">
                             <div class="pharmacy__wrapper">
                                 <div class="pharmacy__info">
-                                    <h1>${question.getTitle()}</h1>
-                                    <div class="question__content">
-                                        <p class="name">Người hỏi: <b>${question.getCustomer().getFullName()}</b></p>
-                                        <p class="content">Nội dung câu hỏi: <b>${question.getQuestion()}</b></p>
-                                        <p class="datetime">Thời gian: <b>${question.getTimeQuestion()}</b></p>
+                                    <div class="question__title">
+                                        <h1>${question.getTitle()}</h1>
                                     </div>
-                                    <h1>Trả lời</h1>
+                                    <div class="question__item">
                                     <div class="question__content">
-                                        <p class="name">Bác sĩ trả lời: <b> ${question.getDoctor().getFullName()} </b> </p>
-                                        <p class="content">Nội dung câu trả lời: <b>${question.getAnswer()}</b></p>
-                                        <p class="datetime">Thời gian: <b> ${question.getTimeAnswer()}</b></p>
+                                        <div class="question__info">
+                                            <p class="name">Người hỏi: <b>${question.getCustomer().getFullName()}</b></p>
+                                            <p class="datetime"> <i class="fas fa-clock"></i> <b>${question.getTimeQuestion()}</b></p>
+                                        </div>
+                                        <p class="content"><b>Câu hỏi:</b> ${question.getQuestion()}</p>
+                                    </div>
+                                    <h2>Trả lời</h2>
+                                    <div class="question__content">
+                                        <div class="question__info">
+                                            <p class="name">Bác sĩ: <b> ${question.getDoctor().getFullName()} </b> </p>
+                                            <p class="datetime"> <i class="fas fa-clock"></i> <b>${question.getTimeAnswer()} </b></p>
+                                        </div>
+                                        <p class="content"><b>Trả lời:</b> <br>${question.getAnswer()}</p>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,23 +176,7 @@
     <!-- Container End -->
     <!-- Container End -->
 
-    <!-- Footer Begin -->
-    <div class="footer-main">
-        <footer>
-            <div class="social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i
-                    class="fab fa-facebook-messenger"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a
-                    href="#"><i class="fab fa-instagram"></i></a></div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Trang chủ</a></li>
-                <li class="list-inline-item"><a href="#">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-            </ul>
-            <p class="copyright">Company Name © 2021</p>
-        </footer>
-    </div>
-    <!-- Footer End -->
+    <jsp:include page="/footer.jsp"/>
 </div>
 </body>
 <script src="../js/main.js"></script>

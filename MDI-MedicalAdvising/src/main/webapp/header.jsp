@@ -45,6 +45,52 @@
             height: 100px;
             object-fit: cover;
         }
+        .close, .closeDelivery {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,.closeDelivery:hover,
+        .close:focus, .closeDelivery:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .status__container {
+            padding: 0 20px;
+        }
+        form {
+            position: relative;
+            height: 387px;
+        }
+        .product-in-cart-list {
+            margin: 10px 0;
+            overflow: scroll;
+            max-height: 156px;
+        }
+        .product-in-cart-item {
+            padding: 0 20px;
+            display: flex;
+        }
+        .btn__status__container {
+            display: flex;
+            justify-content: center;
+        }
+        .btn__status {
+            position: absolute;
+            bottom: 0;
+            align-items: center;
+            padding: 8px 80px;
+            background-color: var(--main-color);
+            border: none;
+        }
+        .product-total{
+            padding-left: 20px;
+            color: tomato;
+            font-size: 13pt;
+        }
     </style>
 
 </head>
@@ -206,7 +252,6 @@
                 %>
             </ul>
         </nav>
-
     </div>
     <!-- Top header end-->
 
@@ -248,13 +293,20 @@
             <a <%--href="/medical"--%> class="logo-link" onclick="window.open('https://medical-advice.netlify.app/', '_blank', 'location=yes,height=570,width=1000,scrollbars=yes,status=yes')">
                 <img src="../assets/image/logo2_transparent.png" alt="" class="header-middle__logo" >
             </a>
-
         </div>
     </div>
 </div>
 <c:if test="${order!=null}">
-    <div class="shopping__cart__list" style="display: block">
-        <h4 class="shopping__cart__header">Sản phẩm đã thêm</h4>
+    <div class="shopping__cart" id="btnModal" onclick="openModal()">
+        <i class="fas fa-cart-plus"></i>
+        <span class="shopping__cart__number display--none">0</span>
+    </div>
+</c:if>
+
+<%--<c:if test="${order!=null}">--%>
+    <div class="shopping__cart__list" style="display:none;" id="modal">
+        <h4 class="shopping__cart__header">Sản phẩm đã thêm<span class="close">&times;</span></h4>
+
         <ul class="cart__list__container">
             <c:forEach items="${order.getItemList()}" var="item">
                 <li class="cart__list__item">
@@ -267,7 +319,7 @@
                             <span class="item__update"></span>
                         </div>
                         <div class="item__body">
-                            <span class="items__price__total">Tổng: 123đ</span>
+                            <span class="items__price__total">${item.getPrice()*item.getQuantity()}</span>
                             <span class="icon__update">
                 <span class="item__cart__edit"><i class="fas fa-pencil-alt edit__cart"></i></span>
                                 <!-- <span class="item__cart__edit"><i class="far fa-trash-alt"></i></span> -->
@@ -278,12 +330,93 @@
                 </li>
             </c:forEach>
         </ul>
+        <c:if test="${totalPrice!=null}"><h4 style="margin: 5px 20px; color: tomato">Tổng: ${totalPrice}  </h4></c:if>
         <div class="btn__buy__cart">
-            <button class="buy__confirm">Mua</button>
+            <button class="buy__confirm" id="buy" onclick="openDelivery()">Mua</button>
         </div>
     </div>
-</c:if>
+<div class="modal" style="display: none;" id="modalDelivery">
+    <div class="modal__overlay"></div>
+    <div class="modal__body" style="height: 490px">
+        <form action="/payment" method="post">
+            <h2 style="padding: 0 20px;">Nhập thông tin giao hàng <span class="closeDelivery">&times;</span></h2>
+            <div class="info__container">
+                <div class="name__container info__content">
+                    <span>Họ tên</span>
+                    <input type="text" required placeholder="vui lòng nhập tên của bạn" class="name__value" name="nameDelivery">
+                </div>
+                <div class="tel__container info__content">
+                    <span>Số điện thoại</span>
+                    <input type="text" required placeholder="Vui lòng nhập số điện thoại" class="tel__value" name="numberPhoneDelivery">
+                </div>
+                <div class="address__container info__content">
+                    <span>Địa chỉ</span>
+                    <input type="text" required placeholder="Vui lòng nhập địa chỉ" class="address__value" name="andressDelivery">
+            </div>
+            <div class="product-in-cart">
+                <h2 style="padding: 0 20px; margin: 0">Danh sách sản phẩm đã thêm</h2>
+                <ul class="cart__list__container product-in-cart-list">
+                    <c:forEach items="${order.getItemList()}" var="item">
+                    <li class="product-in-cart-item">
+                        <img src="data:image/jpg;base64,${item.getDrug().getImage()}" alt="sản phẩm đã thêm" class="item__img">
+                        <div class="item__info">
+                            <div class="item__header">
+                                <h5 class="item__name">${item.getDrug().getName()}</h5>
+                                <span class="item__price">${item.getPrice()}đ</span>
+                                <span class="item__qnt">x${item.getQuantity()}</span>
+                            </div>
+                            <div class="item__body">
+                                <span class="items__price__total">Tổng: ${item.getPrice()*item.getQuantity()}</span>
+                            </div>
+                        </div>
+                    </li>
+                    </c:forEach>
+                </ul>
+                <div class="product-total">
+                    <span>Tổng tiền: ${totalPrice}</span>
+                </div>
+                <div class="btn__status__container" style="height: 85px">
+                    <button class="btn__status btn__seeking" type="submit" style="border-radius: 10px">Gửi thông tin</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<%--</c:if>--%>
 <!-- Header End -->
 <%--<script src="/js/main.js"></script>--%>
+<script>
+    var modal = document.getElementById("modal");
+    var btn = document.getElementById("btnModal");
+    var span = document.getElementsByClassName("close")[0];
+    var buy = document.getElementById("buy");
+    var modalDelivery = document.getElementById("modalDelivery");
+    var close = document.getElementsByClassName("closeDelivery")[0];
+    span.onclick = function() {
+        modalDelivery.style.display = "none";
+        modal.style.display = "none";
+        btn.style.display = "block";
+    }
+    close.onclick = function() {
+        modalDelivery.style.display = "none";
+        btn.style.display = "block";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            btn.style.display = "block";
+        }
+    }
+    function openModal(){
+        btn.style.display = "none";
+        modal.style.display = "block";
+    }
+    function  openDelivery(){
+        modalDelivery.style.display = "flex";
+        modal.style.display = "none";
+        btn.style.display = "block";
+    }
+</script>
 </body>
 </html>

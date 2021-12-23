@@ -68,7 +68,7 @@
                                             alt="${drug.getName()}" style="height: 150px; object-fit: cover">
                                 </div>
                                 <p class="product__name" style="text-transform: uppercase;"><b>${drug.getName()}</b></p>
-                                <div class="product__price" style="color: #ee4d2d">${drug.priceFormat()} ₫
+                                <div class="product__price" style="color: tomato; display: flex;align-items: center;" >${drug.priceFormat()} ₫
                                     <a href="/cart?actionUser=add&drugId=${drug.getId()}"><i class="fas fa-cart-plus cart-icon"></i></a>
                                 </div>
                             </a>
@@ -85,9 +85,11 @@
         <span class="shopping__cart__number display--none">0</span>
     </div>--%>
 </div>
+</div>
+</div>
 
 <!-- Container End -->
-<jsp:include page="footer.jsp"/>
+<jsp:include page="/footer.jsp"/>
 </body>
 
 </html>

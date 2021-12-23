@@ -40,9 +40,11 @@
 <!-- Footer Begin -->
 <div class="footer-main">
     <footer>
-        <div class="social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i
-                class="fab fa-facebook-messenger"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a
-                href="#"><i class="fab fa-instagram"></i></a></div>
+        <div class="social" >
+            <a href="#"><i class="fab fa-facebook" style="line-height: unset"></i></a>
+            <a href="#"><i class="fab fa-facebook-messenger" style="line-height: unset"></i></a>
+            <a href="#"><i class="fab fa-twitter" style="line-height: unset"></i></a>
+            <a href="#"><i class="fab fa-instagram" style="line-height: unset"></i></a></div>
         <ul class="list-inline">
             <li class="list-inline-item"><a href="#">Trang chủ</a></li>
             <li class="list-inline-item"><a href="#">Services</a></li>
@@ -50,7 +52,7 @@
             <li class="list-inline-item"><a href="#">Terms</a></li>
             <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
         </ul>
-        <p class="copyright">Company Name © 2021</p>
+        <p class="copyright">Medical Advising © 2021</p>
     </footer>
 </div>
 <!-- Footer End -->

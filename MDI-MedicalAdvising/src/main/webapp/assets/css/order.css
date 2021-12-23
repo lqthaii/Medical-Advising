@@ -123,7 +123,7 @@
   background-color: var(--white-color);
   border-radius: 10px;
   box-shadow: 0 4px 32px rgb(36 142 255 / 18%);
-  /*display: none;*/
+  display: none;
 }
 .shopping__cart__header {
   font-size: 1.2rem;
@@ -363,11 +363,10 @@
   position: absolute;
   bottom: 0;
   padding: 20px;
-  border-radius: 50px;
   line-height: 46px;
 }
 .btn__seeking{
-  background-color: rgb(13, 201, 13);
+  background-color: var(--main-color);
 }
 .btn__cancel{
   background-color: tomato;

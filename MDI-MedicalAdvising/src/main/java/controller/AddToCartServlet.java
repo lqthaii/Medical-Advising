@@ -65,6 +65,8 @@ public class AddToCartServlet extends HttpServlet {
                     listItems.add(item);
                     order.setItemList(listItems);
                     session.setAttribute("order", order);
+                    session.setAttribute("totalPrice", totalPrice(request,response));
+                    session.setAttribute("orderNum", listItems.size());
                 } else {
                     Order order = (Order) session.getAttribute("order");
                     List<Item> listItems = order.getItemList();
@@ -83,11 +85,8 @@ public class AddToCartServlet extends HttpServlet {
                         listItems.add(item);
                     }
                     session.setAttribute("order", order);
-                    session.setAttribute("totalPrice", totalPrice(order));
+                    session.setAttribute("totalPrice", totalPrice(request,response));
                     session.setAttribute("orderNum", listItems.size());
-                    System.out.println(request.getSession().getAttribute("order"));
-                    System.out.println(request.getSession().getAttribute("totalPrice"));
-                    System.out.println(request.getSession().getAttribute("orderNum"));
                 }
                 List<Drug> drugs = this.customerService.getAllDrug();
                 List<TypeDrug> typeDrugs = this.adminService.getAllTypeDrug();
@@ -104,11 +103,13 @@ public class AddToCartServlet extends HttpServlet {
         }
     }
 
-    private double totalPrice(Order order) {
+    private double totalPrice(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Order order = (Order) session.getAttribute("order");
         List<Item> list = order.getItemList();
         double price = 0;
         for (Item item : list) {
-            price = item.getPrice() * item.getQuantity();
+            price += item.getPrice() * item.getQuantity();
         }
         return price;
     }
